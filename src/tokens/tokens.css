@@ -35,12 +35,17 @@
   --ui-text-primary  : #ffffff;
   --ui-text-secondary: #606060;
 
+
+  --ui-color-danger  : #FF3B30;
+  --ui-color-position: #34C759;
+
   --ui-bg-primary  : red;
   --ui-bg-secondary: #1e1e1e;
 
   --ui-border-secondary: #3e3e3e;
 
-  --ui-radius-medium: 10px;
+  --ui-radius-medium: 13px;
 
-  --ui-padding-medium: 10px;
+  --ui-padding-medium     : 10px;
+  --ui-padding-medium-half: 6px;
 }

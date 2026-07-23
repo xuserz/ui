@@ -40,40 +40,36 @@
   background: none;
 
   width     : 100%;
-  padding   : 6px 10px;
+  padding   : var(--ui-padding-medium-half) var(--ui-padding-medium);
   /* height : 36px; */
 
   border : none;
   outline: none;
+
+  transition: 0.3s;
 }
 
-.Input__element:hover:not(:disabled):not([readonly]) {
-  border-color: var(--ui-color-accent-hover);
+@media (hover: hover) {
+  .Input__in:has(.Input__element:hover:not(:disabled):not(:read-only)) {
+    background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
+  }
 }
 
-.Input__element:focus-visible {
-  outline: 1px solid var(--ui-color-accent);
+.Input__in:has(.Input__element:focus-visible:not(:disabled):not(:read-only)) {
+  background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
 }
+
 
 .Input__element:disabled {
   cursor : not-allowed;
   opacity: 0.55;
 }
 
-.Input__element[readonly] {
-  cursor    : default;
-  background: var(--ui-color-neutral-50);
-}
 
-.Input__element[aria-invalid='true'],
-.Input__element__status--invalid {
-  border-color: var(--ui-color-danger);
-}
-
-.Input__element[aria-invalid='true']:focus-visible,
-.Input__element__status--invalid:focus-visible {
+/* .Input__element[aria-invalid='true']:focus-visible,
+.Input__status--invalid:focus-visible {
   outline-color: color-mix(in srgb, var(--ui-color-danger) 22%, transparent);
-}
+} */
 
 .Input__element::placeholder {
   color  : var(--ui-text-secondary);
@@ -86,9 +82,10 @@
 }
 
 /* Icon Search */
-.Input__icon--search {
+.Input__group--search {
+  position     : relative;
   color        : var(--ui-text-primary);
-  padding      : 5px var(--ui-padding-medium);
+  padding      : var(--ui-padding-medium-half) var(--ui-padding-medium);
   padding-right: 0px;
   box-sizing   : border-box;
 
@@ -97,15 +94,49 @@
   align-items    : center;
 }
 
+.Input__icon--search {
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  opacity        : 1;
+  transform      : scale(1);
+  transition     : 0.3s;
+}
+
+.Input__icon--loading {
+  position       : absolute;
+  opacity        : 0;
+  transform      : scale(0.8);
+  left           : 5px;
+  top            : 0;
+  bottom         : 0;
+  right          : 0;
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+
+  transition: 0.3s;
+}
+
+.Input__in:has(.Input__element[data-loading="true"]) .Input__icon--search {
+  opacity  : 0;
+  transform: scale(0.8);
+}
+
+.Input__in:has(.Input__element[data-loading="true"]) .Input__icon--loading {
+  opacity  : 1;
+  transform: scale(1);
+}
+
+
 /* Button Cancel */
 .Input__button--close {
   position: relative;
 
-  display       : flex;
-  flex-grow     : 0;
-  flex-basis    : 0%;
-  max-width     : min-content;
-  pointer-events: none;
+  display   : flex;
+  flex-grow : 0;
+  flex-basis: 0%;
+  max-width : min-content;
 
   min-width: 0px;
 
@@ -119,9 +150,13 @@
   transition: 0.3s;
 }
 
-.Input__button--close-visible {
+/* .Input__button--close-visible {
   flex-grow     : 1;
   pointer-events: all;
+} */
+
+.Input__in:has(.Input__element:focus-visible:not(:disabled):not(:read-only))~.Input__button--close {
+  flex-grow: 1;
 }
 
 .Input__button--close_in {
@@ -130,17 +165,120 @@
   background: transparent;
   border    : 0;
 
-  padding: 5px var(--ui-padding-medium);
+  padding: var(--ui-padding-medium-half) var(--ui-padding-medium);
   cursor : pointer;
 }
 
-/* type="search" */
-.Input__element[type="search"]:hover {
-  border-color: unset;
-  background  : color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
+
+/* |- :read-only */
+.Input__element:not(:disabled):read-only {
+  cursor           : not-allowed;
+  caret-color      : transparent;
+  /* color         : var(--ui-text-secondary); */
+  /* background    : var(--ui-color-neutral-50); */
 }
 
-.Input__element[type="search"]:focus-visible {
-  outline   : unset;
-  background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
+.Input__icon--readonly,
+.Input__icon--disabled,
+.Input__icon--clear {
+  position       : relative;
+  color          : var(--ui-text-secondary);
+  padding        : var(--ui-padding-medium-half) var(--ui-padding-medium);
+  /* padding-left: 0px; */
+  box-sizing     : border-box;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+
+  transition: 0.3s;
+
+  opacity: 0;
+
+  margin-right: calc((16px + var(--ui-padding-medium) * 2) * -1);
+}
+
+.Input__in:has(.Input__element:not(:disabled):read-only) .Input__icon--readonly {
+  opacity     : 1;
+  margin-right: 0;
+}
+
+.Input__in:has(.Input__element:disabled) .Input__icon--disabled {
+  opacity     : 1;
+  margin-right: 0;
+}
+
+.Input__in:has(.Input__element:not(:placeholder-shown):not(:disabled)) .Input__icon--clear {
+  opacity     : 1;
+  margin-right: 0;
+}
+
+
+/* :valid */
+.Input__in:has(.Input__status--auto):has(.Input__element:not(:focus):valid),
+.Input__in:has(.Input__status--valid) {
+  border-color: var(--ui-color-position);
+  background  : color-mix(in srgb, var(--ui-bg-secondary) 95%, var(--ui-color-position));
+}
+
+/* :invalid */
+.Input__in:has(.Input__status--auto):has(.Input__element:not(:focus):invalid:not(:placeholder-shown)),
+.Input__in:has(.Input__status--invalid) {
+  border-color: var(--ui-color-danger);
+  background  : color-mix(in srgb, var(--ui-bg-secondary) 95%, var(--ui-color-danger));
+}
+
+
+.Input__element[type="number"]::-webkit-outer-spin-button,
+.Input__element[type="number"]::-webkit-inner-spin-button {
+  appearance        : none;
+  -webkit-appearance: none;
+  margin            : 0;
+}
+
+.Input__element[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+.Input__number--buttons {
+  z-index        : 2;
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  flex-direction : row;
+
+  border-radius: calc(var(--ui-radius-medium) - 3px);
+  gap          : 3px;
+  margin       : 3px;
+  box-sizing   : border-box;
+}
+
+.Input__number--button {
+  border-radius: calc(var(--ui-radius-medium) - 3px);
+  background   : color-mix(in srgb, var(--ui-bg-secondary) 90%, white);
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+
+
+  appearance: none;
+  border    : none;
+  color     : var(--ui-text-primary);
+  display   : block;
+  margin    : 0;
+  padding   : var(--ui-padding-medium-half);
+}
+
+
+.Input__number--button * {
+  display: block;
+}
+
+
+@media (hover: none) {
+  .Input__number--buttons {
+    visibility: hidden;
+  }
 }

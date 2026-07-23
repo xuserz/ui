@@ -6,13 +6,24 @@ const meta = {
 	title: 'Forms/Input',
 	component: Input,
 	render: props => {
-		const [value, setValue] = createSignal('jj')
+		const [value, setValue] = createSignal('')
+		const [loading, setLoading] = createSignal(false)
+		let timer: NodeJS.Timeout
 
 		return (
 			<Input
 				{...props}
 				value={value()}
-				onInput={event => setValue(event.target.value)}
+				loading={loading()}
+				onInput={event => {
+					clearTimeout(timer)
+					setLoading(true)
+					setValue(event.target.value)
+
+					timer = setTimeout(() => {
+						setLoading(false)
+					}, 800)
+				}}
 			/>
 		)
 	},
@@ -22,6 +33,7 @@ const meta = {
 		status: 'default',
 		disabled: false,
 		type: 'text',
+		readOnly: false,
 	},
 	argTypes: {
 		placeholder: {
@@ -30,7 +42,7 @@ const meta = {
 		},
 		status: {
 			control: 'select',
-			options: ['default', 'valid', 'invalid'],
+			options: ['default', 'auto', 'valid', 'invalid'],
 			table: {
 				defaultValue: {
 					summary: 'default',
@@ -54,11 +66,57 @@ const meta = {
 				},
 			},
 		},
+		readOnly: {
+			control: 'boolean',
+		},
+		loading: {
+			control: 'boolean',
+			description: 'Загрузка',
+		},
 	},
 } satisfies Meta<typeof Input>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** Базовое действие для главной кнопки на экране. */
-export const Docs: Story = {}
+export const Text: Story = {
+	args: {
+		type: 'text',
+	},
+}
+
+export const Url: Story = {
+	args: {
+		type: 'url',
+	},
+}
+
+export const Telephone: Story = {
+	args: {
+		type: 'tel',
+	},
+}
+
+export const Search: Story = {
+	args: {
+		type: 'search',
+	},
+}
+
+export const Password: Story = {
+	args: {
+		type: 'password',
+	},
+}
+
+export const Number: Story = {
+	args: {
+		type: 'number',
+	},
+}
+
+export const Email: Story = {
+	args: {
+		type: 'email',
+	},
+}
