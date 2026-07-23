@@ -1,0 +1,146 @@
+.Input {
+  display       : flex;
+  flex-direction: row;
+  align-items   : center;
+
+  color: var(--ui-text-primary);
+
+  overflow: hidden;
+}
+
+.Input__in {
+  position  : relative;
+  overflow  : hidden;
+  width     : 100%;
+  box-sizing: border-box;
+
+  display       : flex;
+  flex-direction: row;
+  align-items   : center;
+
+  flex-grow : 2;
+  flex-basis: 0%;
+
+
+  background-color: var(--ui-bg-secondary);
+
+  border-radius: var(--ui-radius-medium);
+
+  border : 1px solid var(--ui-border-secondary);
+  outline: 0px solid transparent;
+
+  transition: 0.3s;
+}
+
+.Input__element {
+  appearance: none;
+
+  color: var(--ui-text-primary);
+
+  background: none;
+
+  width     : 100%;
+  padding   : 6px 10px;
+  /* height : 36px; */
+
+  border : none;
+  outline: none;
+}
+
+.Input__element:hover:not(:disabled):not([readonly]) {
+  border-color: var(--ui-color-accent-hover);
+}
+
+.Input__element:focus-visible {
+  outline: 1px solid var(--ui-color-accent);
+}
+
+.Input__element:disabled {
+  cursor : not-allowed;
+  opacity: 0.55;
+}
+
+.Input__element[readonly] {
+  cursor    : default;
+  background: var(--ui-color-neutral-50);
+}
+
+.Input__element[aria-invalid='true'],
+.Input__element__status--invalid {
+  border-color: var(--ui-color-danger);
+}
+
+.Input__element[aria-invalid='true']:focus-visible,
+.Input__element__status--invalid:focus-visible {
+  outline-color: color-mix(in srgb, var(--ui-color-danger) 22%, transparent);
+}
+
+.Input__element::placeholder {
+  color  : var(--ui-text-secondary);
+  opacity: 1;
+}
+
+.Input__element:-webkit-autofill {
+  -webkit-text-fill-color: var(--ui-color-neutral-900);
+  -webkit-box-shadow     : 0 0 0 1000px var(--ui-color-neutral-0) inset;
+}
+
+/* Icon Search */
+.Input__icon--search {
+  color        : var(--ui-text-primary);
+  padding      : 5px var(--ui-padding-medium);
+  padding-right: 0px;
+  box-sizing   : border-box;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+}
+
+/* Button Cancel */
+.Input__button--close {
+  position: relative;
+
+  display       : flex;
+  flex-grow     : 0;
+  flex-basis    : 0%;
+  max-width     : min-content;
+  pointer-events: none;
+
+  min-width: 0px;
+
+  font-size  : small;
+  line-height: normal;
+  font-weight: normal;
+
+
+  box-sizing: border-box;
+
+  transition: 0.3s;
+}
+
+.Input__button--close-visible {
+  flex-grow     : 1;
+  pointer-events: all;
+}
+
+.Input__button--close_in {
+  appearance: none;
+  color     : inherit;
+  background: transparent;
+  border    : 0;
+
+  padding: 5px var(--ui-padding-medium);
+  cursor : pointer;
+}
+
+/* type="search" */
+.Input__element[type="search"]:hover {
+  border-color: unset;
+  background  : color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
+}
+
+.Input__element[type="search"]:focus-visible {
+  outline   : unset;
+  background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
+}

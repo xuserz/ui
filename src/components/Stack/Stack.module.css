@@ -1,0 +1,16 @@
+.stack { display: flex; }
+.vertical { flex-direction: column; }
+.horizontal { flex-direction: row; }
+.alignStart { align-items: flex-start; }
+.alignCenter { align-items: center; }
+.alignEnd { align-items: flex-end; }
+.justifyStart { justify-content: flex-start; }
+.justifyCenter { justify-content: center; }
+.justifyBetween { justify-content: space-between; }
+.justifyEnd { justify-content: flex-end; }
+.gap1 { gap: var(--ui-space-1); }
+.gap2 { gap: var(--ui-space-2); }
+.gap3 { gap: var(--ui-space-3); }
+.gap4 { gap: var(--ui-space-4); }
+.gap6 { gap: var(--ui-space-6); }
+.gap8 { gap: var(--ui-space-8); }
