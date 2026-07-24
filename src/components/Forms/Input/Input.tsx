@@ -1,8 +1,4 @@
 import {
-	IconArrowDown,
-	IconArrowUp,
-	IconChevronDown,
-	IconChevronUp,
 	IconEye,
 	IconLock,
 	IconMinus,
@@ -17,22 +13,49 @@ import {
 	mergeProps,
 	splitProps,
 	Show,
+	onMount,
+	Switch,
+	Match,
 } from 'solid-js'
 import Spinner from '../../Spinner/Spinner'
+import { createStore } from 'solid-js/store'
 
 interface Input extends JSX.InputHTMLAttributes<HTMLInputElement> {
+	/**
+	 * Управляет визуальным состоянием поля.
+	 * `auto` определяет valid/invalid по нативной HTML-валидации после потери фокуса.
+	 */
 	status?: 'default' | 'auto' | 'valid' | 'invalid'
 
+	/** Тип нативного `<input>` и связанные с ним элементы интерфейса. */
 	type?: 'text' | 'password' | 'email' | 'tel' | 'url' | 'search' | 'number'
 
+	/** Подпись кнопки, которая очищает и завершает поиск. Используется только при `type="search"`. */
 	cancelLabel?: string
 
+	/** Блокирует ввод и взаимодействие с полем. */
 	disabled?: boolean
 
+	/** Оставляет значение доступным для выделения, но запрещает его изменение. */
 	readonly?: boolean
 
+	/** Показывает индикатор обработки запроса. Используется только при `type="search"`. */
 	loading?: boolean
+
+	before?: JSX.Element
+	after?: JSX.Element
+
+	size?: 'medium' | 'large'
 }
+
+type Store = {
+	height: number
+}
+
+/**
+ *
+ * Нужно нормально разобратся с before и after у них padding и gap делают все накрасиво
+ */
 
 const Input: Component<Input> = props => {
 	const merged = mergeProps(
@@ -42,6 +65,7 @@ const Input: Component<Input> = props => {
 			type: 'text',
 			loading: false,
 			cancelLabel: 'Cancel',
+			size: 'medium',
 		},
 		props,
 	)
@@ -53,9 +77,27 @@ const Input: Component<Input> = props => {
 		'value',
 		'cancelLabel',
 		'loading',
+		'size',
+		'readonly',
+		'readOnly',
+		'disabled',
+
+		'before',
+		'after',
 	])
 
+	const [store, setStore] = createStore<Store>({
+		height: 0,
+	})
+
 	let ref: HTMLInputElement | undefined
+
+	onMount(() => {
+		setStore('height', ref!?.clientHeight || 0)
+	})
+
+	// К моменту `click` фокус может перейти с input на контрол очистки.
+	// Поэтому запоминаем исходное состояние заранее, на `pointerdown`.
 	let restoreFocusAfterClear = false
 
 	function rememberClearFocus() {
@@ -76,6 +118,7 @@ const Input: Component<Input> = props => {
 		ref.dispatchEvent(new Event('input', { bubbles: true }))
 
 		if (restoreFocusAfterClear && !ref.disabled) {
+			// Даём controlled-компоненту обработать `input` перед возвратом фокуса.
 			queueMicrotask(() => {
 				if (ref.isConnected) ref.focus()
 			})
@@ -97,18 +140,33 @@ const Input: Component<Input> = props => {
 	}
 
 	return (
-		<div class={style.Input}>
+		<div
+			class={style.Input}
+			classList={{
+				[style[`Input__size--${local.size}`]]: !!local.size,
+			}}
+			style={{
+				'--input-height': `${store.height}px`,
+			}}
+		>
 			<div class={style.Input__in}>
-				<Show when={local.type === 'search'}>
-					<span class={style[`Input__group--search`]}>
-						<span class={style[`Input__icon--search`]}>
-							<IconSearch size={16} />
+				<div class={style.Input__before}>
+					<Show keyed when={local.before}>
+						{before => (
+							<span class={style[`Input__icon--before`]}>{before}</span>
+						)}
+					</Show>
+					<Show when={local.type === 'search'}>
+						<span class={style[`Input__group--search`]}>
+							<span class={style[`Input__icon--search`]}>
+								<IconSearch size={20} />
+							</span>
+							<span class={style[`Input__icon--loading`]}>
+								<Spinner size={'small'} />
+							</span>
 						</span>
-						<span class={style[`Input__icon--loading`]}>
-							<Spinner size={'x-small'} />
-						</span>
-					</span>
-				</Show>
+					</Show>
+				</div>
 				<input
 					ref={ref!}
 					class={style.Input__element}
@@ -123,22 +181,35 @@ const Input: Component<Input> = props => {
 					data-loading={local.loading}
 					{...others}
 				/>
-				<span aria-hidden={true} class={style[`Input__icon--readonly`]}>
-					<IconEye size={16} />
-				</span>
-				<span aria-hidden={true} class={style[`Input__icon--disabled`]}>
-					<IconLock size={16} />
-				</span>
-				<Show when={local.type === 'search'}>
-					<span
-						onPointerDown={rememberClearFocus}
-						onClick={onClear}
-						aria-hidden={true}
-						class={style[`Input__icon--clear`]}
-					>
-						<IconX size={16} />
-					</span>
-				</Show>
+				<div class={style.Input__after}>
+					<Show keyed when={local.after}>
+						{after => <span class={style[`Input__icon--after`]}>{after}</span>}
+					</Show>
+
+					<Switch>
+						<Match when={local.disabled}>
+							<span aria-hidden={true} class={style[`Input__icon--disabled`]}>
+								<IconLock size={24} />
+							</span>
+						</Match>
+						<Match when={local.readonly || local.readOnly}>
+							<span aria-hidden={true} class={style[`Input__icon--readonly`]}>
+								<IconEye size={24} />
+							</span>
+						</Match>
+
+						<Match when={local.type === 'search'}>
+							<span
+								onPointerDown={rememberClearFocus}
+								onClick={onClear}
+								aria-hidden={true}
+								class={style[`Input__icon--clear`]}
+							>
+								<IconX size={24} />
+							</span>
+						</Match>
+					</Switch>
+				</div>
 				<Show when={local.type === 'number'}>
 					<div class={style[`Input__number--buttons`]}>
 						<button

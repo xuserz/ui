@@ -44,8 +44,8 @@
 
   --ui-border-secondary: #3e3e3e;
 
-  --ui-radius-medium: 13px;
+  --ui-radius-medium: 16px;
 
-  --ui-padding-medium     : 10px;
-  --ui-padding-medium-half: 6px;
+  --ui-padding-medium     : 16px;
+  --ui-padding-medium-half: 10px;
 }
