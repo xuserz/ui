@@ -38,6 +38,10 @@ const meta = {
 		// after: <IconTest />,
 	},
 	argTypes: {
+		size: {
+			control: 'select',
+			options: ['small', 'medium', 'large'],
+		},
 		placeholder: {
 			control: 'text',
 			description: 'Текст-подсказка, отображаемый в пустом поле.',
