@@ -13,12 +13,11 @@ import {
 	mergeProps,
 	splitProps,
 	Show,
-	onMount,
 	Switch,
 	Match,
 } from 'solid-js'
 import Spinner from '../../Spinner/Spinner'
-import { createStore } from 'solid-js/store'
+import Button from '../../Button/Button'
 
 interface Input extends JSX.InputHTMLAttributes<HTMLInputElement> {
 	/**
@@ -47,15 +46,6 @@ interface Input extends JSX.InputHTMLAttributes<HTMLInputElement> {
 
 	size?: 'medium' | 'large'
 }
-
-type Store = {
-	height: number
-}
-
-/**
- *
- * Нужно нормально разобратся с before и after у них padding и gap делают все накрасиво
- */
 
 const Input: Component<Input> = props => {
 	const merged = mergeProps(
@@ -138,23 +128,26 @@ const Input: Component<Input> = props => {
 			}}
 		>
 			<div class={style.Input__in}>
-				<div class={style.Input__before}>
-					<Show keyed when={local.before}>
-						{before => (
-							<span class={style[`Input__icon--before`]}>{before}</span>
-						)}
-					</Show>
-					<Show when={local.type === 'search'}>
-						<span class={style[`Input__group--search`]}>
-							<span class={style[`Input__icon--search`]}>
-								<IconSearch size={`var(--ui-size-20px)`} />
+				<Show when={local.before || local.type === 'search'}>
+					<div class={style.Input__before}>
+						<Show keyed when={local.before}>
+							{before => (
+								<span class={style[`Input__icon--before`]}>{before}</span>
+							)}
+						</Show>
+						<Show when={local.type === 'search'}>
+							<span class={style[`Input__group--search`]}>
+								<span class={style[`Input__icon--search`]}>
+									<IconSearch size={`var(--ui-size-20px)`} />
+								</span>
+								<span class={style[`Input__icon--loading`]}>
+									<Spinner size={'small'} />
+								</span>
 							</span>
-							<span class={style[`Input__icon--loading`]}>
-								<Spinner size={'small'} />
-							</span>
-						</span>
-					</Show>
-				</div>
+						</Show>
+					</div>
+				</Show>
+
 				<input
 					ref={ref!}
 					class={style.Input__element}
@@ -179,24 +172,25 @@ const Input: Component<Input> = props => {
 					<Switch>
 						<Match when={local.disabled}>
 							<span aria-hidden={true} class={style[`Input__icon--disabled`]}>
-								<IconLock size={`var(--ui-size-24px)`} />
+								<IconLock size={`var(--ui-size-20px)`} />
 							</span>
 						</Match>
 						<Match when={local.readonly || local.readOnly}>
 							<span aria-hidden={true} class={style[`Input__icon--readonly`]}>
-								<IconEye size={`var(--ui-size-24px)`} />
+								<IconEye size={`var(--ui-size-20px)`} />
 							</span>
 						</Match>
 
 						<Match when={local.type === 'search'}>
-							<span
+							<Button
+								mode={'secondary'}
 								onPointerDown={rememberClearFocus}
 								onClick={onClear}
 								aria-hidden={true}
 								class={style[`Input__icon--clear`]}
 							>
-								<IconX size={`var(--ui-size-24px)`} />
-							</span>
+								<IconX size={`var(--ui-size-20px)`} />
+							</Button>
 						</Match>
 					</Switch>
 				</div>

@@ -1,83 +1,81 @@
-.button {
-  align-items    : center;
-  border         : 1px solid transparent;
-  border-radius  : var(--ui-radius-md);
-  display        : inline-flex;
-  font-weight    : 650;
-  gap            : var(--ui-space-2);
-  justify-content: center;
-  line-height    : 1.25;
-  transition     : background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
-}
-
-.button:focus-visible {
-  outline       : 3px solid color-mix(in srgb, var(--ui-color-focus) 35%, transparent);
-  outline-offset: 2px;
-}
-
-.button:disabled {
-  opacity: 0.52;
-}
-
-.primary {
-  background: var(--ui-color-accent);
-  color     : var(--ui-color-accent-contrast);
-}
-
-.primary:not(:disabled):hover {
-  background: var(--ui-color-accent-hover);
-}
-
-.secondary {
-  background  : var(--ui-color-neutral-0);
-  border-color: var(--ui-color-neutral-200);
-  color       : var(--ui-color-neutral-700);
-  box-shadow  : var(--ui-shadow-sm);
-}
-
-.secondary:not(:disabled):hover {
-  background  : var(--ui-color-neutral-50);
-  border-color: var(--ui-color-neutral-500);
-}
-
-.ghost {
+.Button {
+  appearance: none;
+  margin    : 0;
+  padding   : 0;
   background: transparent;
-  color     : var(--ui-color-accent);
+  border    : 0;
+
+  border-radius: var(--ui-radius-medium);
+
+  font-size  : normal;
+  line-height: normal;
+  font-weight: normal;
+
+  transition: 0.3s;
+
+  cursor: pointer;
+
+  overflow: hidden;
 }
 
-.ghost:not(:disabled):hover {
-  background: color-mix(in srgb, var(--ui-color-accent) 10%, transparent);
+/* Sizes */
+.Button__size--small {}
+
+.Button__size--medium {
+  padding: var(--ui-size-8px) var(--ui-size-16px);
 }
 
-.sm {
-  min-height: 2rem;
-  padding   : 0.375rem 0.625rem;
-  font-size : 0.8125rem;
+.Button__size--large {}
+
+/* appearance ACCENT */
+/* appearance ACCENT | mode PRIMARY */
+.Button__appearance--accent.Button__mode--primary {
+  background-color: var(--ui-button-accent-primary);
+  color           : var(--ui-button-accent-primary--text);
 }
 
-.md {
-  min-height: 2.5rem;
-  padding   : 0.625rem 0.875rem;
-  font-size : 0.9375rem;
-}
-
-.lg {
-  min-height: 3rem;
-  padding   : 0.75rem 1.125rem;
-  font-size : 1rem;
-}
-
-.spinner {
-  animation         : spin 650ms linear infinite;
-  border            : 2px solid currentcolor;
-  border-right-color: transparent;
-  border-radius     : 999px;
-  height            : 0.9em;
-  width             : 0.9em;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@media (hover: hover) {
+  .Button__appearance--accent.Button__mode--primary:hover {
+    background-color: var(--ui-button-accent-primary--hover);
   }
+}
+
+
+.Button__appearance--accent.Button__mode--primary:active {
+  background-color: var(--ui-button-accent-primary--active);
+}
+
+/* appearance ACCENT | mode SECONDARY */
+.Button__appearance--accent.Button__mode--secondary {
+  background-color: var(--ui-button-accent-secondary);
+  color           : var(--ui-button-accent-secondary--text);
+}
+
+@media (hover: hover) {
+  .Button__appearance--accent.Button__mode--secondary:hover {
+    background-color: var(--ui-button-accent-secondary--hover);
+  }
+}
+
+
+.Button__appearance--accent.Button__mode--secondary:active {
+  background-color: var(--ui-button-accent-secondary--active);
+}
+
+/* appearance TERTIARY */
+/* appearance TERTIARY | mode PRIMARY */
+.Button__appearance--tertiary.Button__mode--primary {
+  background-color: transparent;
+  color           : var(--ui-button-accent-tertiary--text);
+}
+
+@media (hover: hover) {
+  .Button__appearance--tertiary.Button__mode--primary:hover {
+    opacity: 0.8;
+  }
+}
+
+
+.Button__appearance--tertiary.Button__mode--primary:active {
+  opacity: 0.6;
 }

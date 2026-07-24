@@ -1,28 +1,33 @@
+/* -------------------------------------------------------------------------- */
+/* Корневой контейнер и размеры                                               */
+/* -------------------------------------------------------------------------- */
+
 .Input {
   display       : flex;
   flex-direction: row;
   align-items   : center;
 
-  color: var(--ui-text-primary);
-
+  color   : var(--ui-text-primary);
   overflow: hidden;
 }
 
 .Input__size--small {
-  --input-height: var(--ui-input-small)
+  --input-height: var(--ui-input-small);
 }
 
 .Input__size--medium {
-  --input-height: var(--ui-input-medium)
+  --input-height: var(--ui-input-medium);
 }
 
 .Input__size--large {
-  --input-height: var(--ui-input-large)
+  --input-height: var(--ui-input-large);
 }
 
+/* -------------------------------------------------------------------------- */
+/* Контейнер поля и нативный input                                            */
+/* -------------------------------------------------------------------------- */
+
 .Input__in {
-  /* border */
-  /* padding   : 2px; */
   position  : relative;
   overflow  : hidden;
   width     : 100%;
@@ -35,55 +40,37 @@
   flex-grow : 2;
   flex-basis: 0%;
 
-
   background-color: var(--ui-bg-secondary);
-
-  border-radius: var(--ui-radius-medium);
-
-  border : var(--ui-size-1px) solid var(--ui-border-secondary);
-  outline: 0px solid transparent;
+  border          : var(--ui-size-1px) solid var(--ui-border-secondary);
+  border-radius   : var(--ui-radius-medium);
+  outline         : 0 solid transparent;
 
   transition: 0.3s;
 }
 
 .Input__element {
   appearance: none;
-
-  color: var(--ui-text-primary);
-
-  background: none;
-
   width     : 100%;
-  padding   : 0px var(--ui-padding-medium);
-  /* height : 36px; */
+  height    : var(--input-height);
+  padding   : 0 var(--ui-padding-medium);
 
-  border : none;
-  outline: none;
+  color     : var(--ui-text-primary);
+  background: none;
+  border    : none;
+  outline   : none;
 
   transition: 0.3s;
 }
 
+/* Убираем отступ input слева, если есть контент в слоте before. */
 .Input__in:has(.Input__before:not(:empty)) .Input__element {
-  padding-left: 0px;
+  padding-left: 0;
 }
 
-
-@media (hover: hover) {
-  .Input__in:has(.Input__element:hover:not(:disabled):not(:read-only)) {
-    background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
-  }
+/* Убираем отступ input справа, если есть контент в слоте after. */
+.Input__in:has(.Input__after:not(:empty)) .Input__element {
+  padding-right: 0;
 }
-
-.Input__in:has(.Input__element:focus-visible:not(:disabled):not(:read-only)) {
-  background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
-}
-
-
-.Input__element:disabled {
-  cursor : not-allowed;
-  opacity: 0.55;
-}
-
 
 .Input__element::placeholder {
   color  : var(--ui-text-secondary);
@@ -95,66 +82,84 @@
   -webkit-box-shadow     : 0 0 0 1000px var(--ui-color-neutral-0) inset;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Интерактивные состояния                                                     */
+/* -------------------------------------------------------------------------- */
 
-/* Button Cancel */
-.Input__button--close {
-  position: relative;
-
-  display   : flex;
-  flex-grow : 0;
-  flex-basis: 0%;
-  max-width : min-content;
-
-  min-width: 0px;
-
-  font-size  : normal;
-  line-height: normal;
-  font-weight: normal;
-
-
-  box-sizing: border-box;
-
-  transition: 0.3s;
+@media (hover: hover) {
+  .Input__in:has(.Input__element:hover:not(:disabled):not(:read-only)) {
+    background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
+  }
 }
 
-.Input__in:has(.Input__element:focus-visible:not(:disabled):not(:read-only))~.Input__button--close {
-  flex-grow: 1;
+.Input__in:has(.Input__element:focus-visible:not(:disabled):not(:read-only)) {
+  background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
 }
 
-.Input__button--close_in {
-  appearance: none;
-  color     : inherit;
-  background: transparent;
-  border    : 0;
-
-  padding: var(--ui-padding-medium-half) var(--ui-padding-medium);
-  cursor : pointer;
+.Input__element:disabled {
+  cursor : not-allowed;
+  opacity: 0.55;
 }
 
-
-/* |- :read-only */
 .Input__element:not(:disabled):read-only {
   cursor     : not-allowed;
   caret-color: transparent;
 }
 
-
-
-/* :valid */
+/* Состояния нативной валидации. */
 .Input__in:has(.Input__status--auto):has(.Input__element:not(:focus):valid),
 .Input__in:has(.Input__status--valid) {
   border-color: var(--ui-color-position);
   background  : color-mix(in srgb, var(--ui-bg-secondary) 95%, var(--ui-color-position));
 }
 
-/* :invalid */
 .Input__in:has(.Input__status--auto):has(.Input__element:not(:focus):invalid:not(:placeholder-shown)),
 .Input__in:has(.Input__status--invalid) {
   border-color: var(--ui-color-danger);
   background  : color-mix(in srgb, var(--ui-bg-secondary) 95%, var(--ui-color-danger));
 }
 
+/* -------------------------------------------------------------------------- */
+/* Элементы управления поиском                                                */
+/* -------------------------------------------------------------------------- */
 
+.Input__button--close {
+  position  : relative;
+  min-width : 0;
+  max-width : min-content;
+  box-sizing: border-box;
+
+  display   : flex;
+  flex-grow : 0;
+  flex-basis: 0%;
+
+  font-size  : normal;
+  line-height: normal;
+  font-weight: normal;
+
+  transition: 0.3s;
+}
+
+/* Показываем отмену, пока поисковое поле получило фокус с клавиатуры. */
+.Input__in:has(.Input__element:focus-visible:not(:disabled):not(:read-only))~.Input__button--close {
+  flex-grow: 1;
+}
+
+.Input__button--close_in {
+  appearance: none;
+  padding   : var(--ui-padding-medium-half) var(--ui-padding-medium);
+
+  color     : inherit;
+  background: transparent;
+  border    : 0;
+  cursor    : pointer;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Числовое поле                                                              */
+/* -------------------------------------------------------------------------- */
+
+/* Скрываем нативные кнопки браузера для number-input. */
 .Input__element[type="number"]::-webkit-outer-spin-button,
 .Input__element[type="number"]::-webkit-inner-spin-button {
   appearance        : none;
@@ -166,42 +171,40 @@
   -moz-appearance: textfield;
 }
 
-
 .Input__number--buttons {
-  z-index        : 2;
+  z-index   : 2;
+  box-sizing: border-box;
+  margin    : var(--ui-size-3px);
+  gap       : var(--ui-size-3px);
+
   display        : flex;
+  flex-direction : row;
   justify-content: center;
   align-items    : center;
-  flex-direction : row;
 
   border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
-  gap          : var(--ui-size-3px);
-  margin       : var(--ui-size-3px);
-  box-sizing   : border-box;
 }
 
 .Input__number--button {
-  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
-  background   : color-mix(in srgb, var(--ui-bg-secondary) 90%, white);
-
   display        : flex;
   justify-content: center;
   align-items    : center;
 
-
   appearance: none;
-  border    : none;
-  color     : var(--ui-text-primary);
-  display   : block;
   margin    : 0;
   padding   : var(--ui-padding-medium-half);
-}
 
+  color        : var(--ui-text-primary);
+  background   : color-mix(in srgb, var(--ui-bg-secondary) 90%, white);
+  border       : none;
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
+
+  display: block;
+}
 
 .Input__number--button * {
   display: block;
 }
-
 
 @media (hover: none) {
   .Input__number--buttons {
@@ -209,30 +212,29 @@
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/* Контент before и индикатор загрузки                                       */
+/* -------------------------------------------------------------------------- */
 
-/* Before */
 .Input__before {
   position  : relative;
   box-sizing: border-box;
-
-  display: flex;
+  display   : flex;
 }
 
 .Input__group--search {
-  position: relative;
-  color   : var(--ui-text-primary);
-
-  margin: var(--ui-size-2px);
-  height: calc(var(--input-height) - var(--ui-size-4px));
-  width : calc(var(--input-height) - var(--ui-size-4px));
-
-  padding-right: 0px;
+  position     : relative;
+  width        : calc(var(--input-height) - var(--ui-size-4px));
+  height       : calc(var(--input-height) - var(--ui-size-4px));
+  margin       : var(--ui-size-2px);
+  padding-right: 0;
   box-sizing   : border-box;
 
   display        : flex;
   justify-content: center;
   align-items    : center;
 
+  color: var(--ui-text-primary);
 }
 
 .Input__icon--search {
@@ -241,24 +243,27 @@
   align-items    : center;
   opacity        : 1;
   transform      : scale(1);
-  transition     : 0.3s;
-}
-
-.Input__icon--loading {
-  position       : absolute;
-  opacity        : 0;
-  transform      : scale(0.8);
-  left           : 0;
-  top            : 0;
-  bottom         : 0;
-  right          : 0;
-  display        : flex;
-  justify-content: center;
-  align-items    : center;
 
   transition: 0.3s;
 }
 
+.Input__icon--loading {
+  position: absolute;
+  top     : 0;
+  right   : 0;
+  bottom  : 0;
+  left    : 0;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  opacity        : 0;
+  transform      : scale(0.8);
+
+  transition: 0.3s;
+}
+
+/* Плавно заменяем поисковую иконку индикатором загрузки. */
 .Input__in:has(.Input__element[data-loading="true"]) .Input__icon--search {
   opacity  : 0;
   transform: scale(0.8);
@@ -269,82 +274,77 @@
   transform: scale(1);
 }
 
+/* -------------------------------------------------------------------------- */
+/* Контент after и иконки состояния поля                                     */
+/* -------------------------------------------------------------------------- */
 
-/* After */
 .Input__after {
   position  : relative;
   box-sizing: border-box;
-
-  display: flex;
+  display   : flex;
 }
 
 .Input__icon--clear {
-  margin: var(--ui-size-2px);
-  width : calc(var(--input-height) - var(--ui-size-4px));
-  height: calc(var(--input-height) - var(--ui-size-4px));
+  position    : relative;
+  margin      : var(--ui-size-6px);
+  width       : calc(var(--input-height) - var(--ui-size-12px));
+  height      : calc(var(--input-height) - var(--ui-size-12px));
+  margin-right: calc(calc(var(--input-height) - var(--ui-size-12px)) * -1);
+  box-sizing  : border-box;
 
-  position  : relative;
-  color     : var(--ui-text-secondary);
-  box-sizing: border-box;
+  padding: 0px;
 
   display        : flex;
   justify-content: center;
   align-items    : center;
 
+  color        : var(--ui-text-secondary);
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-6px) - var(--ui-size-1px));
+
   transition: 0.3s;
-
-  margin-right: calc(calc(var(--input-height) - var(--ui-size-4px)) * -1);
-
-  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
-  background   : color-mix(in srgb, var(--ui-bg-secondary) 90%, white);
 }
 
-/* Input__icon--clear */
+/* Показываем очистку только у непустого доступного для ввода поля. */
 .Input__in:has(.Input__element:not(:placeholder-shown):not(:disabled):not(:read-only)) .Input__icon--clear {
   opacity     : 1;
-  margin-right: var(--ui-size-2px);
+  margin-right: var(--ui-size-6px);
 }
 
 .Input__icon--before,
 .Input__icon--after {
-  position: relative;
-  color   : var(--ui-text-secondary);
-
-  margin   : var(--ui-size-2px);
-  height   : calc(var(--input-height) - var(--ui-size-4px));
-  width    : calc(var(--input-height) - var(--ui-size-4px));
-  min-width: calc(var(--input-height) - var(--ui-size-4px));
-
-
-  box-sizing: border-box;
+  position    : relative;
+  width       : calc(var(--input-height) - var(--ui-size-4px));
+  min-width   : calc(var(--input-height) - var(--ui-size-4px));
+  height      : calc(var(--input-height) - var(--ui-size-4px));
+  margin      : var(--ui-size-2px);
+  margin-right: 0;
+  box-sizing  : border-box;
 
   display        : flex;
   justify-content: center;
   align-items    : center;
 
+  color     : var(--ui-text-secondary);
   transition: 0.3s;
-
-  margin-right: 0px;
 }
 
-/* disabled */
 .Input__icon--disabled,
 .Input__icon--readonly {
-  color: var(--ui-text-secondary);
+  position  : relative;
+  width     : calc(var(--input-height) - var(--ui-size-4px));
+  min-width : calc(var(--input-height) - var(--ui-size-4px));
+  height    : calc(var(--input-height) - var(--ui-size-4px));
+  margin    : var(--ui-size-2px);
+  box-sizing: border-box;
 
-  margin   : var(--ui-size-2px);
-  height   : calc(var(--input-height) - var(--ui-size-4px));
-  width    : calc(var(--input-height) - var(--ui-size-4px));
-  min-width: calc(var(--input-height) - var(--ui-size-4px));
-
-  position     : relative;
-  display      : block;
-  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
-  aspect-ratio : 1 / 1;
-  width        : 100%;
-  box-sizing   : border-box;
+  display     : block;
+  width       : 100%;
+  aspect-ratio: 1 / 1;
 
   display        : flex;
   justify-content: center;
   align-items    : center;
+
+  color        : var(--ui-text-secondary);
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
 }

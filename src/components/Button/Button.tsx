@@ -1,45 +1,56 @@
-import { splitProps } from 'solid-js'
-import type { JSX } from 'solid-js'
-import styles from './Button.module.css'
+import style from './Button.module.css'
 
-export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
+import { type Component, type JSX, mergeProps, splitProps } from 'solid-js'
+
+export type Button = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
 	/** Visual emphasis of the action. */
-	variant?: 'primary' | 'secondary' | 'ghost'
+	appearance?: 'accent'
+
+	mode?: 'primary' | 'tertiary' | 'secondary'
 	/** Vertical rhythm and font size. */
-	size?: 'sm' | 'md' | 'lg'
+	size?: 'small' | 'medium' | 'large'
 	/** Blocks interaction and shows a progress indicator. */
 	loading?: boolean
 }
 
-export function Button(props: ButtonProps) {
-	const [local, buttonProps] = splitProps(props, [
-		'variant',
+const Button: Component<Button> = props => {
+	const merged = mergeProps(
+		{
+			appearance: 'accent',
+			mode: 'primary',
+			size: 'medium',
+		},
+		props,
+	)
+
+	const [local, others] = splitProps(merged, [
+		'class',
+		'classList',
+		'children',
+		'mode',
+		'appearance',
 		'size',
 		'loading',
-		'class',
-		'children',
 	])
-
-	const className = () =>
-		[
-			styles.button,
-			styles[local.variant ?? 'primary'],
-			styles[local.size ?? 'md'],
-			local.class,
-		]
-			.filter(Boolean)
-			.join(' ')
 
 	return (
 		<button
-			{...buttonProps}
-			type={buttonProps.type ?? 'button'}
-			class={className()}
-			disabled={buttonProps.disabled || local.loading}
+			type={others.type ?? 'button'}
+			class={style.Button}
+			classList={{
+				[style[`Button__size--${local.size}`]]: !!local.size,
+				[style[`Button__appearance--${local.appearance}`]]: !!local.appearance,
+				[style[`Button__mode--${local.mode}`]]: !!local.mode,
+
+				[`${local.class}`]: !!local.class,
+				...local.classList,
+			}}
 			aria-busy={local.loading || undefined}
+			{...others}
 		>
-			{local.loading && <span class={styles.spinner} aria-hidden='true' />}
 			{local.children}
 		</button>
 	)
 }
+
+export default Button
