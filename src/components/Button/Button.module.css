@@ -87,8 +87,15 @@
   .Button__form--icon:hover {
     transform: scale(1.1);
   }
+
+  .Button__form--icon:active {
+    transform: scale(0.9);
+  }
 }
 
-.Button__form--icon:active {
-  transform: scale(0.9);
+@media (hover: none) {
+
+  .Button__form--icon:active {
+    transform: scale(1.1);
+  }
 }
