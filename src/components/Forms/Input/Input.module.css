@@ -146,13 +146,8 @@
 }
 
 .Input__button--close_in {
-  appearance: none;
-  padding   : var(--ui-padding-medium-half) var(--ui-padding-medium);
-
-  color     : inherit;
-  background: transparent;
-  border    : 0;
-  cursor    : pointer;
+  padding: 0px var(--ui-padding-medium);
+  height : var(--input-height);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -174,15 +169,13 @@
 .Input__number--buttons {
   z-index   : 2;
   box-sizing: border-box;
-  margin    : var(--ui-size-3px);
-  gap       : var(--ui-size-3px);
+  margin    : var(--ui-size-6px);
+  gap       : var(--ui-size-6px);
 
   display        : flex;
   flex-direction : row;
   justify-content: center;
   align-items    : center;
-
-  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
 }
 
 .Input__number--button {
@@ -190,25 +183,22 @@
   justify-content: center;
   align-items    : center;
 
-  appearance: none;
-  margin    : 0;
-  padding   : var(--ui-padding-medium-half);
+  width  : calc(var(--input-height) - var(--ui-size-12px));
+  height : calc(var(--input-height) - var(--ui-size-12px));
+  padding: 0px;
 
-  color        : var(--ui-text-primary);
-  background   : color-mix(in srgb, var(--ui-bg-secondary) 90%, white);
-  border       : none;
-  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
-
-  display: block;
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-6px));
 }
 
-.Input__number--button * {
-  display: block;
+.Input__in:has(.Input__element:is(:disabled, :read-only)) .Input__number--buttons {
+  visibility: hidden;
+  display   : none;
 }
 
 @media (hover: none) {
   .Input__number--buttons {
     visibility: hidden;
+    display   : none;
   }
 }
 

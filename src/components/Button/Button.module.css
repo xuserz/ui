@@ -45,6 +45,23 @@
   background-color: var(--ui-button-accent-primary--active);
 }
 
+/* appearance ACCENT | mode TERTIARY */
+.Button__appearance--accent.Button__mode--tertiary {
+  background-color: transparent;
+  color           : var(--ui-button-accent-tertiary--text);
+}
+
+@media (hover: hover) {
+  .Button__appearance--accent.Button__mode--tertiary:hover {
+    opacity: 0.8;
+  }
+}
+
+
+.Button__appearance--accent.Button__mode--tertiary:active {
+  opacity: 0.6;
+}
+
 /* appearance ACCENT | mode SECONDARY */
 .Button__appearance--accent.Button__mode--secondary {
   background-color: var(--ui-button-accent-secondary);
@@ -60,22 +77,4 @@
 
 .Button__appearance--accent.Button__mode--secondary:active {
   background-color: var(--ui-button-accent-secondary--active);
-}
-
-/* appearance TERTIARY */
-/* appearance TERTIARY | mode PRIMARY */
-.Button__appearance--tertiary.Button__mode--primary {
-  background-color: transparent;
-  color           : var(--ui-button-accent-tertiary--text);
-}
-
-@media (hover: hover) {
-  .Button__appearance--tertiary.Button__mode--primary:hover {
-    opacity: 0.8;
-  }
-}
-
-
-.Button__appearance--tertiary.Button__mode--primary:active {
-  opacity: 0.6;
 }

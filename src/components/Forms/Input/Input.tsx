@@ -78,18 +78,24 @@ const Input: Component<Input> = props => {
 
 	let ref: HTMLInputElement | undefined
 	// К моменту `click` фокус может перейти с input на контрол очистки.
-	// Поэтому запоминаем исходное состояние заранее, на `pointerdown`.
+	// Поэтому проверяем его на `pointerdown`, до выполнения браузерного действия.
 	let restoreFocusAfterClear = false
 
-	function rememberClearFocus() {
+	function rememberClearFocus(event: PointerEvent) {
 		restoreFocusAfterClear = document.activeElement === ref
+
+		// Не даём кнопке забрать фокус у активного input во время нажатия.
+		if (restoreFocusAfterClear) event.preventDefault()
 	}
 
-	function onCancel() {
+	function onCancel(event: MouseEvent) {
 		if (!ref!) return
 
 		ref.value = ''
 		ref.dispatchEvent(new Event('input', { bubbles: true }))
+		queueMicrotask(() => {
+			if (ref.isConnected) ref.blur()
+		})
 	}
 
 	function onClear() {
@@ -183,6 +189,7 @@ const Input: Component<Input> = props => {
 
 						<Match when={local.type === 'search'}>
 							<Button
+								type={'button'}
 								mode={'secondary'}
 								onPointerDown={rememberClearFocus}
 								onClick={onClear}
@@ -196,32 +203,36 @@ const Input: Component<Input> = props => {
 				</div>
 				<Show when={local.type === 'number'}>
 					<div class={style[`Input__number--buttons`]}>
-						<button
+						<Button
+							mode={'secondary'}
 							type={'button'}
 							class={style[`Input__number--button`]}
 							onClick={stepUp}
 						>
-							<IconPlus size={`var(--ui-size-16px)`} />
-						</button>
-						<button
+							<IconPlus size={`var(--ui-size-20px)`} />
+						</Button>
+						<Button
+							mode={'secondary'}
 							type={'button'}
 							class={style[`Input__number--button`]}
 							onClick={stepDown}
 						>
-							<IconMinus size={`var(--ui-size-16px)`} />
-						</button>
+							<IconMinus size={`var(--ui-size-20px)`} />
+						</Button>
 					</div>
 				</Show>
 			</div>
 			<Show when={local.type === 'search'}>
 				<span class={style[`Input__button--close`]}>
-					<button
-						type='button'
+					<Button
+						type={'button'}
+						mode={'tertiary'}
+						onPointerDown={event => event.preventDefault()}
 						onClick={onCancel}
 						class={style['Input__button--close_in']}
 					>
 						{local.cancelLabel}
-					</button>
+					</Button>
 				</span>
 			</Show>
 		</div>

@@ -50,7 +50,7 @@
 
   --ui-button-accent-tertiary--text: #ffffff;
 
-  --ui-button-accent-primary--text    : #ffffff;
+  --ui-button-accent-secondary--text  : color-mix(in srgb, var(--ui-bg-secondary) 50%, white);
   --ui-button-accent-secondary        : color-mix(in srgb, var(--ui-bg-secondary) 90%, white);
   --ui-button-accent-secondary--hover : color-mix(in srgb, var(--ui-button-accent-secondary) 90%, white);
   --ui-button-accent-secondary--active: color-mix(in srgb, var(--ui-button-accent-secondary) 80%, white);
