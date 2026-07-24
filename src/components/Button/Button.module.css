@@ -18,6 +18,10 @@
   overflow: hidden;
 }
 
+.Button:focus {
+  outline: 1px solid var(--ui-color-accent);
+}
+
 /* Sizes */
 .Button__size--small {}
 

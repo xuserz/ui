@@ -1,20 +1,21 @@
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
-import { Button } from './Button'
+import Button from './Button'
 
 const meta = {
 	title: 'Actions/Button',
 	component: Button,
 	args: {
 		children: 'Сохранить изменения',
-		appearance: 'tertiary',
+		appearance: 'accent',
+		mode: 'tertiary',
 		size: 'medium',
 	},
 	argTypes: {
-		variant: {
+		mode: {
 			control: 'inline-radio',
-			options: ['primary', 'secondary', 'ghost'],
+			options: ['primary', 'secondary', 'tertiary'],
 		},
-		size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+		size: { control: 'inline-radio', options: ['small', 'medium', 'large'] },
 	},
 } satisfies Meta<typeof Button>
 

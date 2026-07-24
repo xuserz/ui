@@ -19,7 +19,7 @@ import {
 import Spinner from '../../Spinner/Spinner'
 import Button from '../../Button/Button'
 
-interface Input extends JSX.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
 	/**
 	 * Задаёт визуальное состояние валидации.
 	 * В режиме `auto` оно определяется нативной HTML-валидацией, когда поле не в фокусе.
@@ -72,7 +72,7 @@ interface Input extends JSX.InputHTMLAttributes<HTMLInputElement> {
 	ariaLabelReadonly?: string
 }
 
-const Input: Component<Input> = props => {
+const Input: Component<InputProps> = props => {
 	const merged = mergeProps(
 		{
 			status: 'default',
@@ -127,26 +127,32 @@ const Input: Component<Input> = props => {
 		if (restoreFocusAfterClear) event.preventDefault()
 	}
 
-	function onCancel(event: MouseEvent) {
-		if (!ref!) return
+	function dispatchInputEvent(input: HTMLInputElement) {
+		input.dispatchEvent(new Event('input', { bubbles: true }))
+	}
 
-		ref.value = ''
-		ref.dispatchEvent(new Event('input', { bubbles: true }))
+	function onCancel() {
+		const input = ref
+		if (!input) return
+
+		input.value = ''
+		dispatchInputEvent(input)
 		queueMicrotask(() => {
-			if (ref.isConnected) ref.blur()
+			if (input.isConnected) input.blur()
 		})
 	}
 
 	function onClear() {
-		if (!ref!) return
+		const input = ref
+		if (!input) return
 
-		ref.value = ''
-		ref.dispatchEvent(new Event('input', { bubbles: true }))
+		input.value = ''
+		dispatchInputEvent(input)
 
-		if (restoreFocusAfterClear && !ref.disabled) {
+		if (restoreFocusAfterClear && !input.disabled) {
 			// Даём controlled-компоненту обработать `input` перед возвратом фокуса.
 			queueMicrotask(() => {
-				if (ref.isConnected) ref.focus()
+				if (input.isConnected) input.focus()
 			})
 		}
 
@@ -154,15 +160,19 @@ const Input: Component<Input> = props => {
 	}
 
 	function stepUp() {
-		if (!ref!) return
+		const input = ref
+		if (!input || input.disabled || input.readOnly) return
 
-		ref.stepUp()
+		input.stepUp()
+		dispatchInputEvent(input)
 	}
 
 	function stepDown() {
-		if (!ref!) return
+		const input = ref
+		if (!input || input.disabled || input.readOnly) return
 
-		ref.stepDown()
+		input.stepDown()
+		dispatchInputEvent(input)
 	}
 
 	return (
@@ -254,6 +264,7 @@ const Input: Component<Input> = props => {
 							mode={'secondary'}
 							type={'button'}
 							onClick={stepUp}
+							disabled={local.disabled || local.readonly || local.readOnly}
 							aria-label={local.ariaLabelNumberUp}
 							class={style[`Input__number--button`]}
 						>
@@ -265,6 +276,7 @@ const Input: Component<Input> = props => {
 							class={style[`Input__number--button`]}
 							aria-label={local.ariaLabelNumberDown}
 							onClick={stepDown}
+							disabled={local.disabled || local.readonly || local.readOnly}
 						>
 							<IconMinus size={`var(--ui-size-20px)`} />
 						</Button>

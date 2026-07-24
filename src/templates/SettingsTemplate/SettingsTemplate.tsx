@@ -28,7 +28,7 @@ export function SettingsTemplate() {
             </Stack>
             <hr class={styles.divider} />
             <Stack direction="horizontal" gap={3} justify="end">
-              <Button variant="secondary">Отмена</Button>
+              <Button mode="secondary">Отмена</Button>
               <Button>Сохранить</Button>
             </Stack>
           </Stack>

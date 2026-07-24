@@ -16,7 +16,7 @@ function App() {
             <code>npm run build</code>
             <Stack direction="horizontal" gap={3}>
               <Button>Primary action</Button>
-              <Button variant="secondary">Secondary action</Button>
+              <Button mode="secondary">Secondary action</Button>
             </Stack>
           </Stack>
         </Card>

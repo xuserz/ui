@@ -2,7 +2,7 @@ import style from './Button.module.css'
 
 import { type Component, type JSX, mergeProps, splitProps } from 'solid-js'
 
-export type Button = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
 	/** Visual emphasis of the action. */
 	appearance?: 'accent'
 
@@ -13,7 +13,7 @@ export type Button = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
 	loading?: boolean
 }
 
-const Button: Component<Button> = props => {
+const Button: Component<ButtonProps> = props => {
 	const merged = mergeProps(
 		{
 			appearance: 'accent',

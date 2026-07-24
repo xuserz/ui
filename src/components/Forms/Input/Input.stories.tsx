@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import Input from './Input'
 import { createSignal } from 'solid-js'
-import { Icon12Hours, IconCircle } from '@tabler/icons-solidjs'
-
-const IconTest = () => {
-	return <Icon12Hours />
-}
 
 const meta = {
 	title: 'Forms/Input',

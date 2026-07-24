@@ -1,20 +1,20 @@
 import { Dynamic, type DynamicProps } from 'solid-js/web'
 import style from './Events.module.css'
 import {
-	type JSX,
-	type Component,
-	mergeProps,
 	splitProps,
 	type ValidComponent,
 	onMount,
 	onCleanup,
 } from 'solid-js'
-import { createStore, produce } from 'solid-js/store'
+import { createStore } from 'solid-js/store'
 
-interface Events<T extends ValidComponent> extends JSX.HTMLAttributes<
-	DynamicProps<T>
-> {
-	component: T
+export type EventsProps<T extends ValidComponent = 'span'> = Omit<
+	DynamicProps<T>,
+	'component' | 'class' | 'classList'
+> & {
+	component?: T
+	class?: string
+	classList?: Record<string, boolean | undefined>
 }
 
 type Store = {
@@ -22,73 +22,67 @@ type Store = {
 	focusWithin: boolean
 }
 
-const Events = <T extends ValidComponent>(props: Events<T>) => {
-	const merged = mergeProps({ component: 'span' }, props)
-	const [local, others] = splitProps(merged, [
+const Events = <T extends ValidComponent = 'span'>(props: EventsProps<T>) => {
+	const [local, others] = splitProps(props, [
 		'class',
 		'classList',
 		'component',
 	])
 
-	let ref: HTMLElement
+	let ref: Element | undefined
 
 	const [store, setStore] = createStore<Store>({
 		focus: false,
 		focusWithin: false,
 	})
 
-	function onFocusIn(event: FocusEvent) {
-		console.log('AWGAWG')
-		const currentTarget = event.currentTarget as HTMLDivElement
-		setStore(
-			produce(store => {
-				store.focus = true
-				store.focusWithin = true
-
-				return store
-			}),
-		)
+	function onFocusIn() {
+		setStore({ focus: true, focusWithin: true })
 	}
 
-	function onFocusOut(event: FocusEvent) {
-		const currentTarget = event.currentTarget as HTMLDivElement
-		setStore(
-			produce(store => {
-				store.focus = false
-				store.focusWithin = currentTarget.contains(event.relatedTarget)
+	function onFocusOut(event: Event) {
+		const currentTarget = event.currentTarget
+		if (!(currentTarget instanceof Element)) return
 
-				return store
-			}),
-		)
+		const relatedTarget = (event as FocusEvent).relatedTarget
+
+		setStore({
+			focus: false,
+			focusWithin:
+				relatedTarget instanceof Node && currentTarget.contains(relatedTarget),
+		})
 	}
 
 	onMount(() => {
-		if (!ref!) return
+		const element = ref
+		if (!element) return
 
-		ref.addEventListener('focusin', onFocusIn)
-		ref.addEventListener('focusout', onFocusOut)
+		element.addEventListener('focusin', onFocusIn)
+		element.addEventListener('focusout', onFocusOut)
 
 		onCleanup(() => {
-			ref.removeEventListener('focusin', onFocusIn)
-			ref.removeEventListener('focusout', onFocusOut)
+			element.removeEventListener('focusin', onFocusIn)
+			element.removeEventListener('focusout', onFocusOut)
 		})
 	})
 
-	return (
-		<Dynamic
-			ref={ref!}
-			component={local.component}
-			class={style.Events}
-			classList={{
-				['_focus']: store.focus,
-				[`_focus-within`]: store.focusWithin,
+	const dynamicProps = {
+		...others,
+		component: local.component ?? 'span',
+		ref: (element: Element) => {
+			ref = element
+		},
+		class: style.Events,
+		classList: {
+			['_focus']: store.focus,
+			['_focus-within']: store.focusWithin,
 
-				[`${local.class}`]: !!local.class,
-				...local.classList,
-			}}
-			{...others}
-		/>
-	)
+			[`${local.class}`]: !!local.class,
+			...local.classList,
+		},
+	} as unknown as DynamicProps<T>
+
+	return <Dynamic {...dynamicProps} />
 }
 
 export default Events
