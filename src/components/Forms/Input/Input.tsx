@@ -21,30 +21,55 @@ import Button from '../../Button/Button'
 
 interface Input extends JSX.InputHTMLAttributes<HTMLInputElement> {
 	/**
-	 * Управляет визуальным состоянием поля.
-	 * `auto` определяет valid/invalid по нативной HTML-валидации после потери фокуса.
+	 * Задаёт визуальное состояние валидации.
+	 * В режиме `auto` оно определяется нативной HTML-валидацией, когда поле не в фокусе.
 	 */
 	status?: 'default' | 'auto' | 'valid' | 'invalid'
 
-	/** Тип нативного `<input>` и связанные с ним элементы интерфейса. */
+	/** Тип нативного `<input>`, определяющий доступные элементы управления. */
 	type?: 'text' | 'password' | 'email' | 'tel' | 'url' | 'search' | 'number'
 
-	/** Подпись кнопки, которая очищает и завершает поиск. Используется только при `type="search"`. */
-	cancelLabel?: string
-
-	/** Блокирует ввод и взаимодействие с полем. */
+	/** Полностью отключает поле и его вспомогательные действия. */
 	disabled?: boolean
 
-	/** Оставляет значение доступным для выделения, но запрещает его изменение. */
+	/**
+	 * Алиас нативного `readOnly`.
+	 * Оставляет значение доступным для выделения, но запрещает его изменение.
+	 */
 	readonly?: boolean
 
-	/** Показывает индикатор обработки запроса. Используется только при `type="search"`. */
+	/** Показывает индикатор обработки запроса в поле поиска. */
 	loading?: boolean
 
+	/** Контент перед полем: например, иконка, префикс или селектор страны. */
 	before?: JSX.Element
+
+	/** Контент после поля: например, иконка, суффикс или дополнительное действие. */
 	after?: JSX.Element
 
+	/** Вертикальный размер поля и его вспомогательных элементов. */
 	size?: 'medium' | 'large'
+
+	/** Видимая подпись кнопки отмены поиска. Используется только при `type="search"`. */
+	cancelLabel?: string
+
+	/** Доступное имя кнопки очистки поискового поля. */
+	ariaLabelClear?: string
+
+	/** Доступное имя кнопки отмены поиска. */
+	ariaLabelCancel?: string
+
+	/** Доступное имя кнопки увеличения значения числового поля. */
+	ariaLabelNumberUp?: string
+
+	/** Доступное имя кнопки уменьшения значения числового поля. */
+	ariaLabelNumberDown?: string
+
+	/** Текстовое описание иконки отключённого поля. */
+	ariaLabelDisabled?: string
+
+	/** Текстовое описание иконки поля, доступного только для чтения. */
+	ariaLabelReadonly?: string
 }
 
 const Input: Component<Input> = props => {
@@ -54,8 +79,15 @@ const Input: Component<Input> = props => {
 			disabled: false,
 			type: 'text',
 			loading: false,
-			cancelLabel: 'Cancel',
 			size: 'medium',
+
+			cancelLabel: 'Отмена',
+			ariaLabelClear: 'Очистить поле',
+			ariaLabelCancel: 'Отменить поиск',
+			ariaLabelNumberUp: 'Увеличить значение',
+			ariaLabelNumberDown: 'Уменьшить значение',
+			ariaLabelDisabled: 'Поле недоступно',
+			ariaLabelReadonly: 'Поле только для чтения',
 		},
 		props,
 	)
@@ -74,6 +106,13 @@ const Input: Component<Input> = props => {
 
 		'before',
 		'after',
+
+		'ariaLabelClear',
+		'ariaLabelCancel',
+		'ariaLabelNumberUp',
+		'ariaLabelNumberDown',
+		'ariaLabelDisabled',
+		'ariaLabelReadonly',
 	])
 
 	let ref: HTMLInputElement | undefined
@@ -177,12 +216,20 @@ const Input: Component<Input> = props => {
 
 					<Switch>
 						<Match when={local.disabled}>
-							<span aria-hidden={true} class={style[`Input__icon--disabled`]}>
+							<span
+								role='img'
+								aria-label={local.ariaLabelDisabled}
+								class={style[`Input__icon--disabled`]}
+							>
 								<IconLock size={`var(--ui-size-20px)`} />
 							</span>
 						</Match>
 						<Match when={local.readonly || local.readOnly}>
-							<span aria-hidden={true} class={style[`Input__icon--readonly`]}>
+							<span
+								role='img'
+								aria-label={local.ariaLabelReadonly}
+								class={style[`Input__icon--readonly`]}
+							>
 								<IconEye size={`var(--ui-size-20px)`} />
 							</span>
 						</Match>
@@ -193,7 +240,7 @@ const Input: Component<Input> = props => {
 								mode={'secondary'}
 								onPointerDown={rememberClearFocus}
 								onClick={onClear}
-								aria-hidden={true}
+								aria-label={local.ariaLabelClear}
 								class={style[`Input__icon--clear`]}
 							>
 								<IconX size={`var(--ui-size-20px)`} />
@@ -206,8 +253,9 @@ const Input: Component<Input> = props => {
 						<Button
 							mode={'secondary'}
 							type={'button'}
-							class={style[`Input__number--button`]}
 							onClick={stepUp}
+							aria-label={local.ariaLabelNumberUp}
+							class={style[`Input__number--button`]}
 						>
 							<IconPlus size={`var(--ui-size-20px)`} />
 						</Button>
@@ -215,6 +263,7 @@ const Input: Component<Input> = props => {
 							mode={'secondary'}
 							type={'button'}
 							class={style[`Input__number--button`]}
+							aria-label={local.ariaLabelNumberDown}
 							onClick={stepDown}
 						>
 							<IconMinus size={`var(--ui-size-20px)`} />
@@ -229,6 +278,7 @@ const Input: Component<Input> = props => {
 						mode={'tertiary'}
 						onPointerDown={event => event.preventDefault()}
 						onClick={onCancel}
+						aria-label={local.ariaLabelCancel}
 						class={style['Input__button--close_in']}
 					>
 						{local.cancelLabel}
