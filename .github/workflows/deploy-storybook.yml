@@ -45,7 +45,7 @@ jobs:
         run: yarn build-storybook
 
       - name: Configure custom domain
-        run: printf 'wag.su\n' > storybook-static/CNAME
+        run: printf 'docs.wag.su\n' > storybook-static/CNAME
 
       - name: Publish documentation to pages branch
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

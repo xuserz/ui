@@ -82,3 +82,13 @@
 .Button__appearance--accent.Button__mode--secondary:active {
   background-color: var(--ui-button-accent-secondary--active);
 }
+
+@media (hover: hover) {
+  .Button__form--icon:hover {
+    transform: scale(1.1);
+  }
+}
+
+.Button__form--icon:active {
+  transform: scale(0.9);
+}

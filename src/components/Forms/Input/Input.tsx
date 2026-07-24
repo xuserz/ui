@@ -183,25 +183,30 @@ const Input: Component<InputProps> = props => {
 			}}
 		>
 			<div class={style.Input__in}>
-				<Show when={local.before || local.type === 'search'}>
-					<div class={style.Input__before}>
-						<Show keyed when={local.before}>
-							{before => (
-								<span class={style[`Input__icon--before`]}>{before}</span>
-							)}
-						</Show>
-						<Show when={local.type === 'search'}>
-							<span class={style[`Input__group--search`]}>
-								<span class={style[`Input__icon--search`]}>
-									<IconSearch size={`var(--ui-size-20px)`} />
-								</span>
-								<span class={style[`Input__icon--loading`]}>
-									<Spinner size={'small'} />
-								</span>
+				<div class={style.Input__before}>
+					<Show keyed when={local.before}>
+						{before => (
+							<span class={style[`Input__icon--before`]}>{before}</span>
+						)}
+					</Show>
+					<Show
+						when={local.type === 'search'}
+						fallback={
+							<span class={style[`Input__icon--loading`]}>
+								<Spinner size={'small'} />
 							</span>
-						</Show>
-					</div>
-				</Show>
+						}
+					>
+						<span class={style[`Input__group--search`]}>
+							<span class={style[`Input__icon--search`]}>
+								<IconSearch size={`var(--ui-size-20px)`} />
+							</span>
+							<span class={style[`Input__icon--loading`]}>
+								<Spinner size={'small'} />
+							</span>
+						</span>
+					</Show>
+				</div>
 
 				<input
 					ref={ref!}
@@ -246,6 +251,7 @@ const Input: Component<InputProps> = props => {
 
 						<Match when={local.type === 'search'}>
 							<Button
+								form={'icon'}
 								size={'none'}
 								type={'button'}
 								mode={'secondary'}
@@ -262,6 +268,7 @@ const Input: Component<InputProps> = props => {
 				<Show when={local.type === 'number'}>
 					<div class={style[`Input__number--buttons`]}>
 						<Button
+							form={'icon'}
 							size={'none'}
 							mode={'secondary'}
 							type={'button'}
@@ -273,6 +280,7 @@ const Input: Component<InputProps> = props => {
 							<IconPlus size={`var(--ui-size-20px)`} />
 						</Button>
 						<Button
+							form={'icon'}
 							size={'none'}
 							mode={'secondary'}
 							type={'button'}

@@ -14,7 +14,7 @@ const meta = {
 			<Input
 				{...props}
 				value={value()}
-				loading={loading()}
+				loading={props.loading || loading()}
 				onInput={event => {
 					clearTimeout(timer)
 					setLoading(true)
@@ -34,8 +34,8 @@ const meta = {
 		disabled: false,
 		type: 'text',
 		readOnly: false,
-		// before: <IconTest />,
-		// after: <IconTest />,
+		loading: false,
+		size: 'medium',
 	},
 	argTypes: {
 		size: {

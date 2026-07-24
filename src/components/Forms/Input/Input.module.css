@@ -9,6 +9,8 @@
 
   color   : var(--ui-text-primary);
   overflow: hidden;
+
+  width: 100%;
 }
 
 .Input__size--small {
@@ -63,7 +65,7 @@
 }
 
 /* Убираем отступ input слева, если есть контент в слоте before. */
-.Input__in:has(.Input__before:not(:empty)) .Input__element {
+.Input__in:has(.Input__before:not(:empty)) .Input__element:not(.Input__element:not([data-loading="true"]):not([type="search"])) {
   padding-left: 0;
 }
 
@@ -238,31 +240,56 @@
 }
 
 .Input__icon--loading {
+  position: relative;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+
+  margin: var(--ui-size-6px);
+  width : calc(var(--input-height) - var(--ui-size-12px));
+  height: calc(var(--input-height) - var(--ui-size-12px));
+
+  transition: 0.3s;
+
+  margin-left: calc(calc(var(--input-height) - var(--ui-size-6px)) * -1);
+  opacity    : 0;
+}
+
+.Input__in:has(.Input__element[type="search"]) .Input__icon--loading {
   position: absolute;
   top     : 0;
   right   : 0;
   bottom  : 0;
   left    : 0;
 
+  margin: 0px;
+  width : unset;
+  height: unset;
+
   display        : flex;
   justify-content: center;
   align-items    : center;
   opacity        : 0;
   transform      : scale(0.8);
-
-  transition: 0.3s;
 }
 
 /* Плавно заменяем поисковую иконку индикатором загрузки. */
-.Input__in:has(.Input__element[data-loading="true"]) .Input__icon--search {
+.Input__in:has(.Input__element[type="search"][data-loading="true"]) .Input__icon--search {
   opacity  : 0;
   transform: scale(0.8);
 }
 
-.Input__in:has(.Input__element[data-loading="true"]) .Input__icon--loading {
+.Input__in:has(.Input__element[type="search"][data-loading="true"]) .Input__icon--loading {
   opacity  : 1;
   transform: scale(1);
 }
+
+.Input__in:has(.Input__element:not([type="search"])[data-loading="true"]) .Input__icon--loading {
+  margin-left: var(--ui-size-6px);
+  opacity    : 1;
+}
+
 
 /* -------------------------------------------------------------------------- */
 /* Контент after и иконки состояния поля                                     */

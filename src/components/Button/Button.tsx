@@ -11,6 +11,8 @@ export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
 	size?: 'small' | 'medium' | 'large' | 'none'
 	/** Blocks interaction and shows a progress indicator. */
 	loading?: boolean
+
+	form?: 'default' | 'icon'
 }
 
 const Button: Component<ButtonProps> = props => {
@@ -19,6 +21,7 @@ const Button: Component<ButtonProps> = props => {
 			appearance: 'accent',
 			mode: 'primary',
 			size: 'medium',
+			form: 'default',
 		},
 		props,
 	)
@@ -31,6 +34,7 @@ const Button: Component<ButtonProps> = props => {
 		'appearance',
 		'size',
 		'loading',
+		'form',
 	])
 
 	return (
@@ -41,6 +45,7 @@ const Button: Component<ButtonProps> = props => {
 				[style[`Button__size--${local.size}`]]: !!local.size,
 				[style[`Button__appearance--${local.appearance}`]]: !!local.appearance,
 				[style[`Button__mode--${local.mode}`]]: !!local.mode,
+				[style[`Button__form--${local.form}`]]: !!local.form,
 
 				[`${local.class}`]: !!local.class,
 				...local.classList,
