@@ -8,7 +8,7 @@ export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 	mode?: 'primary' | 'tertiary' | 'secondary'
 	/** Vertical rhythm and font size. */
-	size?: 'small' | 'medium' | 'large'
+	size?: 'small' | 'medium' | 'large' | 'none'
 	/** Blocks interaction and shows a progress indicator. */
 	loading?: boolean
 }

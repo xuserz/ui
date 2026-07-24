@@ -1,0 +1,14 @@
+.Group {
+  padding: 10px;
+}
+
+.Group__in {
+  display       : flex;
+  flex-direction: column;
+
+  gap          : var(--ui-padding-medium);
+  padding      : var(--ui-padding-medium);
+  border-radius: calc(var(--ui-radius-medium) + var(--ui-padding-medium));
+
+  background-color: var(--ui-bg-secondary);
+}

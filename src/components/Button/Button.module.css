@@ -19,7 +19,7 @@
 }
 
 .Button:focus {
-  outline: 1px solid var(--ui-color-accent);
+  outline: unset;
 }
 
 /* Sizes */

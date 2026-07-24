@@ -145,7 +145,7 @@
   flex-grow: 1;
 }
 
-.Input__button--close_in {
+.Input__button--close .Input__button--close_in {
   padding: 0px var(--ui-padding-medium);
   height : var(--input-height);
 }
@@ -178,7 +178,7 @@
   align-items    : center;
 }
 
-.Input__number--button {
+.Input__in .Input__number--button {
   display        : flex;
   justify-content: center;
   align-items    : center;
@@ -274,7 +274,7 @@
   display   : flex;
 }
 
-.Input__icon--clear {
+.Input__in .Input__icon--clear {
   position    : relative;
   margin      : var(--ui-size-6px);
   width       : calc(var(--input-height) - var(--ui-size-12px));

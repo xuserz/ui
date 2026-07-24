@@ -1,3 +1,4 @@
+import style from './Input.module.css'
 import {
 	IconEye,
 	IconLock,
@@ -6,7 +7,6 @@ import {
 	IconSearch,
 	IconX,
 } from '@tabler/icons-solidjs'
-import style from './Input.module.css'
 import {
 	type JSX,
 	type Component,
@@ -48,7 +48,7 @@ interface InputProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
 	after?: JSX.Element
 
 	/** Вертикальный размер поля и его вспомогательных элементов. */
-	size?: 'medium' | 'large'
+	size?: 'small' | 'medium' | 'large'
 
 	/** Видимая подпись кнопки отмены поиска. Используется только при `type="search"`. */
 	cancelLabel?: string
@@ -246,6 +246,7 @@ const Input: Component<InputProps> = props => {
 
 						<Match when={local.type === 'search'}>
 							<Button
+								size={'none'}
 								type={'button'}
 								mode={'secondary'}
 								onPointerDown={rememberClearFocus}
@@ -261,6 +262,7 @@ const Input: Component<InputProps> = props => {
 				<Show when={local.type === 'number'}>
 					<div class={style[`Input__number--buttons`]}>
 						<Button
+							size={'none'}
 							mode={'secondary'}
 							type={'button'}
 							onClick={stepUp}
@@ -271,6 +273,7 @@ const Input: Component<InputProps> = props => {
 							<IconPlus size={`var(--ui-size-20px)`} />
 						</Button>
 						<Button
+							size={'none'}
 							mode={'secondary'}
 							type={'button'}
 							class={style[`Input__number--button`]}
@@ -286,6 +289,7 @@ const Input: Component<InputProps> = props => {
 			<Show when={local.type === 'search'}>
 				<span class={style[`Input__button--close`]}>
 					<Button
+						size={'none'}
 						type={'button'}
 						mode={'tertiary'}
 						onPointerDown={event => event.preventDefault()}
