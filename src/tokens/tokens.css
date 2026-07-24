@@ -44,12 +44,30 @@
 
   --ui-border-secondary: #3e3e3e;
 
-  --ui-input-small : 36px;
-  --ui-input-medium: 40px;
-  --ui-input-large : 44px;
+  --ui-size-1px : 0.063rem;
+  --ui-size-2px : 0.125rem;
+  --ui-size-3px : 0.188rem;
+  --ui-size-4px : 0.25rem;
+  --ui-size-6px : 0.375rem;
+  --ui-size-10px: 0.625rem;
+  --ui-size-12px: 0.75rem;
+  --ui-size-16px: 1rem;
+  --ui-size-20px: 1.25rem;
+  --ui-size-24px: 1.5rem;
+  --ui-size-28px: 1.75rem;
+  --ui-size-32px: 2rem;
+  --ui-size-36px: 2.25rem;
+  --ui-size-40px: 2.5rem;
+  --ui-size-44px: 2.75rem;
+  --ui-size-48px: 3rem;
+  --ui-size-52px: 3.25rem;
 
-  --ui-radius-medium: 16px;
+  --ui-input-small : var(--ui-size-36px);
+  --ui-input-medium: var(--ui-size-40px);
+  --ui-input-large : var(--ui-size-44px);
 
-  --ui-padding-medium     : 16px;
-  --ui-padding-medium-half: 10px;
+  --ui-radius-medium: var(--ui-size-16px);
+
+  --ui-padding-medium     : var(--ui-size-16px);
+  --ui-padding-medium-half: var(--ui-size-10px);
 }

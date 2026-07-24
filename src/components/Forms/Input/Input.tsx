@@ -147,7 +147,7 @@ const Input: Component<Input> = props => {
 					<Show when={local.type === 'search'}>
 						<span class={style[`Input__group--search`]}>
 							<span class={style[`Input__icon--search`]}>
-								<IconSearch size={20} />
+								<IconSearch size={`var(--ui-size-20px)`} />
 							</span>
 							<span class={style[`Input__icon--loading`]}>
 								<Spinner size={'small'} />
@@ -179,12 +179,12 @@ const Input: Component<Input> = props => {
 					<Switch>
 						<Match when={local.disabled}>
 							<span aria-hidden={true} class={style[`Input__icon--disabled`]}>
-								<IconLock size={24} />
+								<IconLock size={`var(--ui-size-24px)`} />
 							</span>
 						</Match>
 						<Match when={local.readonly || local.readOnly}>
 							<span aria-hidden={true} class={style[`Input__icon--readonly`]}>
-								<IconEye size={24} />
+								<IconEye size={`var(--ui-size-24px)`} />
 							</span>
 						</Match>
 
@@ -195,7 +195,7 @@ const Input: Component<Input> = props => {
 								aria-hidden={true}
 								class={style[`Input__icon--clear`]}
 							>
-								<IconX size={24} />
+								<IconX size={`var(--ui-size-24px)`} />
 							</span>
 						</Match>
 					</Switch>
@@ -207,14 +207,14 @@ const Input: Component<Input> = props => {
 							class={style[`Input__number--button`]}
 							onClick={stepUp}
 						>
-							<IconPlus size={16} />
+							<IconPlus size={`var(--ui-size-16px)`} />
 						</button>
 						<button
 							type={'button'}
 							class={style[`Input__number--button`]}
 							onClick={stepDown}
 						>
-							<IconMinus size={16} />
+							<IconMinus size={`var(--ui-size-16px)`} />
 						</button>
 					</div>
 				</Show>

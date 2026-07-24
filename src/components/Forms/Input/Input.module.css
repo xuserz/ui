@@ -40,7 +40,7 @@
 
   border-radius: var(--ui-radius-medium);
 
-  border : 1px solid var(--ui-border-secondary);
+  border : var(--ui-size-1px) solid var(--ui-border-secondary);
   outline: 0px solid transparent;
 
   transition: 0.3s;
@@ -174,14 +174,14 @@
   align-items    : center;
   flex-direction : row;
 
-  border-radius: calc(var(--ui-radius-medium) - 3px);
-  gap          : 3px;
-  margin       : 3px;
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
+  gap          : var(--ui-size-3px);
+  margin       : var(--ui-size-3px);
   box-sizing   : border-box;
 }
 
 .Input__number--button {
-  border-radius: calc(var(--ui-radius-medium) - 3px);
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
   background   : color-mix(in srgb, var(--ui-bg-secondary) 90%, white);
 
   display        : flex;
@@ -222,9 +222,9 @@
   position: relative;
   color   : var(--ui-text-primary);
 
-  margin: 2px;
-  height: calc(var(--input-height) - 4px);
-  width : calc(var(--input-height) - 4px);
+  margin: var(--ui-size-2px);
+  height: calc(var(--input-height) - var(--ui-size-4px));
+  width : calc(var(--input-height) - var(--ui-size-4px));
 
   padding-right: 0px;
   box-sizing   : border-box;
@@ -279,9 +279,9 @@
 }
 
 .Input__icon--clear {
-  margin: 2px;
-  width : calc(var(--input-height) - 4px);
-  height: calc(var(--input-height) - 4px);
+  margin: var(--ui-size-2px);
+  width : calc(var(--input-height) - var(--ui-size-4px));
+  height: calc(var(--input-height) - var(--ui-size-4px));
 
   position  : relative;
   color     : var(--ui-text-secondary);
@@ -293,16 +293,16 @@
 
   transition: 0.3s;
 
-  margin-right: calc(calc(var(--input-height) - 4px) * -1);
+  margin-right: calc(calc(var(--input-height) - var(--ui-size-4px)) * -1);
 
-  border-radius: calc(var(--ui-radius-medium) - 3px);
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
   background   : color-mix(in srgb, var(--ui-bg-secondary) 90%, white);
 }
 
 /* Input__icon--clear */
 .Input__in:has(.Input__element:not(:placeholder-shown):not(:disabled):not(:read-only)) .Input__icon--clear {
   opacity     : 1;
-  margin-right: 2px;
+  margin-right: var(--ui-size-2px);
 }
 
 .Input__icon--before,
@@ -310,10 +310,10 @@
   position: relative;
   color   : var(--ui-text-secondary);
 
-  margin   : 2px;
-  height   : calc(var(--input-height) - 4px);
-  width    : calc(var(--input-height) - 4px);
-  min-width: calc(var(--input-height) - 4px);
+  margin   : var(--ui-size-2px);
+  height   : calc(var(--input-height) - var(--ui-size-4px));
+  width    : calc(var(--input-height) - var(--ui-size-4px));
+  min-width: calc(var(--input-height) - var(--ui-size-4px));
 
 
   box-sizing: border-box;
@@ -332,14 +332,14 @@
 .Input__icon--readonly {
   color: var(--ui-text-secondary);
 
-  margin   : 2px;
-  height   : calc(var(--input-height) - 4px);
-  width    : calc(var(--input-height) - 4px);
-  min-width: calc(var(--input-height) - 4px);
+  margin   : var(--ui-size-2px);
+  height   : calc(var(--input-height) - var(--ui-size-4px));
+  width    : calc(var(--input-height) - var(--ui-size-4px));
+  min-width: calc(var(--input-height) - var(--ui-size-4px));
 
   position     : relative;
   display      : block;
-  border-radius: calc(var(--ui-radius-medium) - 3px);
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
   aspect-ratio : 1 / 1;
   width        : 100%;
   box-sizing   : border-box;
