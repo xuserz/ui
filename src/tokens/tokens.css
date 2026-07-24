@@ -44,6 +44,10 @@
 
   --ui-border-secondary: #3e3e3e;
 
+  --ui-input-small : 36px;
+  --ui-input-medium: 40px;
+  --ui-input-large : 44px;
+
   --ui-radius-medium: 16px;
 
   --ui-padding-medium     : 16px;

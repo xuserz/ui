@@ -86,16 +86,7 @@ const Input: Component<Input> = props => {
 		'after',
 	])
 
-	const [store, setStore] = createStore<Store>({
-		height: 0,
-	})
-
 	let ref: HTMLInputElement | undefined
-
-	onMount(() => {
-		setStore('height', ref!?.clientHeight || 0)
-	})
-
 	// К моменту `click` фокус может перейти с input на контрол очистки.
 	// Поэтому запоминаем исходное состояние заранее, на `pointerdown`.
 	let restoreFocusAfterClear = false
@@ -145,9 +136,6 @@ const Input: Component<Input> = props => {
 			classList={{
 				[style[`Input__size--${local.size}`]]: !!local.size,
 			}}
-			style={{
-				'--input-height': `${store.height}px`,
-			}}
 		>
 			<div class={style.Input__in}>
 				<div class={style.Input__before}>
@@ -179,6 +167,8 @@ const Input: Component<Input> = props => {
 					type={local.type}
 					value={local.value}
 					data-loading={local.loading}
+					disabled={local.disabled}
+					readOnly={local.readonly || local.readOnly}
 					{...others}
 				/>
 				<div class={style.Input__after}>

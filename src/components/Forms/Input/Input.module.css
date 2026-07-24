@@ -8,6 +8,18 @@
   overflow: hidden;
 }
 
+.Input__size--small {
+  --input-height: var(--ui-input-small)
+}
+
+.Input__size--medium {
+  --input-height: var(--ui-input-medium)
+}
+
+.Input__size--large {
+  --input-height: var(--ui-input-large)
+}
+
 .Input__in {
   /* border */
   /* padding   : 2px; */
@@ -42,7 +54,7 @@
   background: none;
 
   width     : 100%;
-  padding   : var(--ui-padding-medium-half) var(--ui-padding-medium);
+  padding   : 0px var(--ui-padding-medium);
   /* height : 36px; */
 
   border : none;
@@ -51,7 +63,7 @@
   transition: 0.3s;
 }
 
-.Input__in:has(:not(.Input__before:empty)) .Input__element {
+.Input__in:has(.Input__before:not(:empty)) .Input__element {
   padding-left: 0px;
 }
 
