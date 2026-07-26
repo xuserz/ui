@@ -1,0 +1,13 @@
+{
+  "v": 0,
+  "docs": {
+    "guide-начало-работы--docs": {
+      "id": "guide-начало-работы--docs",
+      "name": "Docs",
+      "path": "./src/docs/GettingStarted.mdx",
+      "title": "Guide/Начало работы",
+      "content": "import { Meta, Title, Description } from '@storybook/addon-docs/blocks';\n\n<Meta title=\"Guide/Начало работы\" />\n\n<Title>Как работать с этой библиотекой</Title>\n\n<Description>\nStorybook — главный каталог компонентов. Для каждого компонента добавляй состояния в\n`*.stories.tsx`: это одновременно визуальная документация, примеры и проверяемые сценарии.\n</Description>\n\n## Быстрый старт\n\n```bash\nnpm run storybook\n```\n\nОткрой адрес из терминала, обычно `http://localhost:6006`. В Canvas можно менять props через\nControls, а во вкладке Docs — читать описание API и копировать примеры.\n\n## Где что лежит\n\n| Папка | Назначение |\n| --- | --- |\n| `src/components` | Переиспользуемые атомарные компоненты. |\n| `src/tokens` | Цвета, отступы, радиусы и другие дизайн-токены. |\n| `src/templates` | Готовые композиции и страницы из компонентов. |\n| `*.stories.tsx` | Все поддерживаемые состояния и сценарии использования. |\n\n## Правило добавления компонента\n\nСоздай папку `src/components/ComponentName` с четырьмя файлами:\n\n```text\nComponentName.tsx\nComponentName.module.css\nComponentName.stories.tsx\nindex.ts\n```\n\nПеред тем как считать компонент готовым, покажи в story минимум default-состояние, крайние\nсостояния (disabled/loading/error), все variants и размеры. Если компоненты уже собираются в\nреальный экран — создавай Template, а не добавляй продуктовую логику в примитив.\n",
+      "summary": "Как работать с этой библиотекой Storybook — главный каталог компонентов. Для каждого компо..."
+    }
+  }
+}

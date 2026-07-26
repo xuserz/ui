@@ -1,0 +1,141 @@
+{
+  "v": 0,
+  "components": {
+    "actions-button": {
+      "id": "actions-button",
+      "name": "Button",
+      "path": "./src/components/Button/Button.stories.tsx",
+      "stories": [
+        {
+          "id": "actions-button--primary",
+          "name": "Primary",
+          "snippet": "const Primary = () => <Button appearance=\"accent\" mode=\"tertiary\" size=\"medium\">Сохранить изменения</Button>;",
+          "description": "Базовое действие для главной кнопки на экране."
+        }
+      ],
+      "import": "import { default } from \"./Button\";",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component import found",
+        "message": "No component file found for the \"Button\" component."
+      }
+    },
+    "forms-input": {
+      "id": "forms-input",
+      "name": "Input",
+      "path": "./src/components/Forms/Input/Input.stories.tsx",
+      "stories": [
+        {
+          "id": "forms-input--text",
+          "name": "Text",
+          "snippet": "const Text = props => {\n    const [value, setValue] = createSignal('')\n    const [loading, setLoading] = createSignal(false)\n    let timer: NodeJS.Timeout\n\n    return (\n        <Input\n            {...props}\n            value={value()}\n            loading={props.loading || loading()}\n            onInput={event => {\n                clearTimeout(timer)\n                setLoading(true)\n                setValue(event.target.value)\n\n                timer = setTimeout(() => {\n                    setLoading(false)\n                }, 800)\n            }}\n        />\n    )\n};",
+          "description": ""
+        },
+        {
+          "id": "forms-input--url",
+          "name": "Url",
+          "snippet": "const Url = props => {\n    const [value, setValue] = createSignal('')\n    const [loading, setLoading] = createSignal(false)\n    let timer: NodeJS.Timeout\n\n    return (\n        <Input\n            {...props}\n            value={value()}\n            loading={props.loading || loading()}\n            onInput={event => {\n                clearTimeout(timer)\n                setLoading(true)\n                setValue(event.target.value)\n\n                timer = setTimeout(() => {\n                    setLoading(false)\n                }, 800)\n            }}\n        />\n    )\n};",
+          "description": ""
+        },
+        {
+          "id": "forms-input--telephone",
+          "name": "Telephone",
+          "snippet": "const Telephone = props => {\n    const [value, setValue] = createSignal('')\n    const [loading, setLoading] = createSignal(false)\n    let timer: NodeJS.Timeout\n\n    return (\n        <Input\n            {...props}\n            value={value()}\n            loading={props.loading || loading()}\n            onInput={event => {\n                clearTimeout(timer)\n                setLoading(true)\n                setValue(event.target.value)\n\n                timer = setTimeout(() => {\n                    setLoading(false)\n                }, 800)\n            }}\n        />\n    )\n};",
+          "description": ""
+        },
+        {
+          "id": "forms-input--search",
+          "name": "Search",
+          "snippet": "const Search = props => {\n    const [value, setValue] = createSignal('')\n    const [loading, setLoading] = createSignal(false)\n    let timer: NodeJS.Timeout\n\n    return (\n        <Input\n            {...props}\n            value={value()}\n            loading={props.loading || loading()}\n            onInput={event => {\n                clearTimeout(timer)\n                setLoading(true)\n                setValue(event.target.value)\n\n                timer = setTimeout(() => {\n                    setLoading(false)\n                }, 800)\n            }}\n        />\n    )\n};",
+          "description": ""
+        },
+        {
+          "id": "forms-input--password",
+          "name": "Password",
+          "snippet": "const Password = props => {\n    const [value, setValue] = createSignal('')\n    const [loading, setLoading] = createSignal(false)\n    let timer: NodeJS.Timeout\n\n    return (\n        <Input\n            {...props}\n            value={value()}\n            loading={props.loading || loading()}\n            onInput={event => {\n                clearTimeout(timer)\n                setLoading(true)\n                setValue(event.target.value)\n\n                timer = setTimeout(() => {\n                    setLoading(false)\n                }, 800)\n            }}\n        />\n    )\n};",
+          "description": ""
+        },
+        {
+          "id": "forms-input--number",
+          "name": "Number",
+          "snippet": "const Number = props => {\n    const [value, setValue] = createSignal('')\n    const [loading, setLoading] = createSignal(false)\n    let timer: NodeJS.Timeout\n\n    return (\n        <Input\n            {...props}\n            value={value()}\n            loading={props.loading || loading()}\n            onInput={event => {\n                clearTimeout(timer)\n                setLoading(true)\n                setValue(event.target.value)\n\n                timer = setTimeout(() => {\n                    setLoading(false)\n                }, 800)\n            }}\n        />\n    )\n};",
+          "description": ""
+        },
+        {
+          "id": "forms-input--email",
+          "name": "Email",
+          "snippet": "const Email = props => {\n    const [value, setValue] = createSignal('')\n    const [loading, setLoading] = createSignal(false)\n    let timer: NodeJS.Timeout\n\n    return (\n        <Input\n            {...props}\n            value={value()}\n            loading={props.loading || loading()}\n            onInput={event => {\n                clearTimeout(timer)\n                setLoading(true)\n                setValue(event.target.value)\n\n                timer = setTimeout(() => {\n                    setLoading(false)\n                }, 800)\n            }}\n        />\n    )\n};",
+          "description": ""
+        }
+      ],
+      "import": "import { default } from \"./Input\";",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component import found",
+        "message": "No component file found for the \"Input\" component."
+      }
+    },
+    "blocks-pagination": {
+      "id": "blocks-pagination",
+      "name": "Pagination",
+      "path": "./src/components/Pagination/Pagination.stories.tsx",
+      "stories": [
+        {
+          "id": "blocks-pagination--docs",
+          "name": "Docs",
+          "snippet": "const Docs = props => {\n    const [page, setPage] = createSignal(props.page)\n\n    createEffect(() => {\n        setPage(props.page)\n    })\n\n    return <Pagination page={page()} onPageChange={setPage} />\n};",
+          "description": "Базовое действие для главной кнопки на экране."
+        }
+      ],
+      "import": "import { default } from \"./Pagination\";",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component import found",
+        "message": "No component file found for the \"Pagination\" component."
+      }
+    },
+    "actions-spinner": {
+      "id": "actions-spinner",
+      "name": "Spinner",
+      "path": "./src/components/Spinner/Spinner.stories.tsx",
+      "stories": [
+        {
+          "id": "actions-spinner--primary",
+          "name": "Primary",
+          "snippet": "const Primary = () => <Spinner size=\"inherit\" progress={undefined} visible />;",
+          "description": "Базовое действие для главной кнопки на экране."
+        }
+      ],
+      "import": "import { default } from \"./Spinner\";",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component import found",
+        "message": "No component file found for the \"Spinner\" component."
+      }
+    },
+    "templates-inputs": {
+      "id": "templates-inputs",
+      "name": "Inputs",
+      "path": "./src/templates/Inputs/Inputs.stories.tsx",
+      "stories": [
+        {
+          "id": "templates-inputs--default",
+          "name": "Default",
+          "snippet": "const Default = () => <Inputs />;",
+          "description": "Полный пример композиции из Button, Card и Stack."
+        }
+      ],
+      "import": "import { Inputs } from \"./Inputs\";",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component import found",
+        "message": "No component file found for the \"Inputs\" component."
+      }
+    }
+  },
+  "meta": {
+    "docgen": "react-component-meta",
+    "durationMs": 403,
+    "engine": "solid-component-meta"
+  }
+}
