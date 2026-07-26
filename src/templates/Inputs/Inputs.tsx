@@ -1,3 +1,5 @@
+import { createSignal } from 'solid-js'
+import { Pagination } from '../../components'
 import Input from '../../components/Forms/Input/Input'
 import Group from '../../components/Group/Group'
 /**
@@ -5,6 +7,8 @@ import Group from '../../components/Group/Group'
  * together and are the right place to document product-level patterns.
  */
 export function Inputs() {
+	const [page, setPage] = createSignal(0)
+
 	return (
 		<main
 			style={{
@@ -32,6 +36,8 @@ export function Inputs() {
 				>
 					<Input size={'small'} />
 				</form>
+
+				<Pagination page={page()} onPageChange={setPage} totalPages={1000} />
 			</Group>
 		</main>
 	)

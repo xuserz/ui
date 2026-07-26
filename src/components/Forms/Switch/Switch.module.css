@@ -1,0 +1,92 @@
+.Switch {
+  position        : relative;
+  border-radius   : var(--ui-radius-medium);
+  background-color: var(--ui-bg-secondary);
+
+  border: var(--ui-size-1px) solid var(--ui-border-secondary);
+
+  overflow: hidden;
+
+  display       : flex;
+  flex-direction: row;
+  box-sizing    : border-box;
+
+  transition: 0.3s;
+}
+
+
+
+.Switch__in {
+  position      : relative;
+  display       : flex;
+  flex-direction: row;
+  box-sizing    : border-box;
+
+  z-index: 2;
+
+}
+
+.Switch__in,
+.Switch__background {
+  margin: var(--ui-size-3px);
+}
+
+.Switch__item,
+.Switch__background {
+  width : var(--ui-size-28px);
+  height: var(--ui-size-28px);
+
+  border-radius: calc(var(--ui-radius-medium) - var(--ui-size-3px));
+}
+
+.Switch__item {
+  display     : block;
+  box-sizing  : border-box;
+  margin-left : 0;
+  margin-right: 0;
+  width       : var(--ui-size-28px);
+  height      : var(--ui-size-28px);
+
+  /* background         : color-mix(in srgb, var(--ui-bg-secondary) 95%, white); */
+  /* background-color: red; */
+}
+
+
+.Switch__background {
+  position      : absolute;
+  /* left       : calc(var(--ui-size-28px) * 1); */
+  /* left       : 50%; */
+  top           : 0;
+  bottom        : 0;
+
+  background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
+
+  transition: 0.3s;
+}
+
+/* colors */
+.Switch__color--default {
+  background: var(--ui-bg-secondary);
+}
+
+.Switch__color--default .Switch__background {
+  background: color-mix(in srgb, var(--ui-bg-secondary) 95%, white);
+}
+
+.Switch__color--positive {
+  background  : color-mix(in srgb, var(--ui-color-position) 5%, var(--ui-bg-secondary));
+  border-color: var(--ui-color-position);
+}
+
+.Switch__color--positive .Switch__background {
+  background: var(--ui-color-position);
+}
+
+.Switch__color--warning {
+  background  : color-mix(in srgb, var(--ui-color-warning) 5%, var(--ui-bg-secondary));
+  border-color: var(--ui-color-warning);
+}
+
+.Switch__color--warning .Switch__background {
+  background: var(--ui-color-warning);
+}

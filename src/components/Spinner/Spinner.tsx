@@ -6,17 +6,12 @@ import {
 	splitProps,
 	mergeProps,
 	Show,
+	createSignal,
+	onMount,
 } from 'solid-js'
 
 interface Spinner extends JSX.HTMLAttributes<HTMLDivElement> {
-	size?:
-		| 'x-small'
-		| 'small'
-		| 'regular'
-		| 'large'
-		| 'x-large'
-		| 'medium'
-		| 'auto'
+	size?: 'small' | 'medium' | 'large' | 'inherit'
 	color?: 'secondary' | 'inherit' | 'primary' | 'icon_tertiary'
 
 	progress?: number
@@ -41,6 +36,14 @@ const Spinner: Component<Spinner> = props => {
 		'visible',
 	])
 
+	let ref: HTMLDivElement
+
+	const [height, setHeight] = createSignal<number>(0)
+
+	onMount(() => {
+		setHeight(ref!?.clientHeight || 0)
+	})
+
 	// Рассчитываем stroke-dasharray и stroke-dashoffset на основе progress
 	const getCircleStyle = () => {
 		if (local.progress === undefined) return {}
@@ -60,6 +63,7 @@ const Spinner: Component<Spinner> = props => {
 
 	return (
 		<div
+			ref={ref!}
 			class={style.Spinner}
 			classList={{
 				[`${local.class}`]: !!local.class,
@@ -83,7 +87,14 @@ const Spinner: Component<Spinner> = props => {
 				/>
 			</svg>
 			<Show when={local.progress !== undefined}>
-				<span class={style.Spinner__progress}>{local.progress}</span>
+				<span
+					style={{
+						'font-size': local.size === 'inherit' ? `${height() / 3}px` : '',
+					}}
+					class={style.Spinner__progress}
+				>
+					{local.progress}
+				</span>
 			</Show>
 		</div>
 	)

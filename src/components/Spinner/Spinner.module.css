@@ -1,7 +1,7 @@
 .Spinner {
   position       : relative;
   display        : flex;
-  transition     : .4s;
+  transition     : 0.4s;
   justify-content: center;
   align-items    : center;
 
@@ -52,18 +52,9 @@
 }
 
 /* Size */
-.Spinner__size--auto svg {
+.Spinner__size--inherit svg {
   width : 100%;
   height: 100%;
-}
-
-.Spinner__size--x-small svg {
-  width : var(--ui-size-16px);
-  height: var(--ui-size-16px);
-}
-
-.Spinner__size--x-small .Spinner__progress {
-  font-size: var(--ui-size-6px);
 }
 
 .Spinner__size--small svg {
@@ -75,40 +66,22 @@
   font-size: var(--ui-size-6px);
 }
 
-.Spinner__size--regular svg {
+.Spinner__size--medium svg {
   width : var(--ui-size-28px);
   height: var(--ui-size-28px);
 }
 
-.Spinner__size--regular .Spinner__progress {
-  font-size: var(--ui-size-10px);
+.Spinner__size--medium .Spinner__progress {
+  font-size: var(--ui-size-8px);
 }
 
-.Spinner__size--medium svg {
+.Spinner__size--large svg {
   width : var(--ui-size-36px);
   height: var(--ui-size-36px);
 }
 
-.Spinner__size--medium .Spinner__progress {
-  font-size: var(--ui-size-12px);
-}
-
-.Spinner__size--large svg {
-  width : var(--ui-size-48px);
-  height: var(--ui-size-48px);
-}
-
 .Spinner__size--large .Spinner__progress {
-  font-size: var(--ui-size-16px);
-}
-
-.Spinner__size--x-large svg {
-  width : var(--ui-size-52px);
-  height: var(--ui-size-52px);
-}
-
-.Spinner__size--x-large .Spinner__progress {
-  font-size: var(--ui-size-20px);
+  font-size: var(--ui-size-12px);
 }
 
 /* Colors */
@@ -128,6 +101,7 @@
   color: inherit;
 }
 
+/* Progress */
 .Spinner__progress {
   position       : absolute;
   left           : 0;

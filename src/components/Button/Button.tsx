@@ -51,6 +51,7 @@ const Button: Component<ButtonProps> = props => {
 				...local.classList,
 			}}
 			aria-busy={local.loading || undefined}
+			data-loading={local.loading}
 			{...others}
 		>
 			{local.children}

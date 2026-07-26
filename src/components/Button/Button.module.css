@@ -39,13 +39,12 @@
 }
 
 @media (hover: hover) {
-  .Button__appearance--accent.Button__mode--primary:hover {
+  .Button__appearance--accent.Button__mode--primary:is(:hover, :focus-visible):not(:disabled):not([data-loading="true"]) {
     background-color: var(--ui-button-accent-primary--hover);
   }
 }
 
-
-.Button__appearance--accent.Button__mode--primary:active {
+.Button__appearance--accent.Button__mode--primary:active:not(:disabled):not([data-loading="true"]) {
   background-color: var(--ui-button-accent-primary--active);
 }
 
@@ -56,13 +55,16 @@
 }
 
 @media (hover: hover) {
-  .Button__appearance--accent.Button__mode--tertiary:hover {
+  .Button__appearance--accent.Button__mode--tertiary:focus-visible:not(:disabled):not([data-loading="true"]) {
+    outline: var(--ui-size-1px) solid var(--ui-button-accent-tertiary--text);
+  }
+
+  .Button__appearance--accent.Button__mode--tertiary:is(:hover, :focus-visible):not(:disabled):not([data-loading="true"]) {
     opacity: 0.8;
   }
 }
 
-
-.Button__appearance--accent.Button__mode--tertiary:active {
+.Button__appearance--accent.Button__mode--tertiary:active:not(:disabled):not([data-loading="true"]) {
   opacity: 0.6;
 }
 
@@ -73,7 +75,7 @@
 }
 
 @media (hover: hover) {
-  .Button__appearance--accent.Button__mode--secondary:hover {
+  .Button__appearance--accent.Button__mode--secondary:is(:hover, :focus-visible) {
     background-color: var(--ui-button-accent-secondary--hover);
   }
 }
@@ -84,18 +86,18 @@
 }
 
 @media (hover: hover) {
-  .Button__form--icon:hover {
+  .Button__form--icon:is(:hover, :focus-visible):not(:disabled):not([data-loading="true"]) {
     transform: scale(1.1);
   }
 
-  .Button__form--icon:active {
+  .Button__form--icon:active:not(:disabled):not([data-loading="true"]) {
     transform: scale(0.9);
   }
 }
 
 @media (hover: none) {
 
-  .Button__form--icon:active {
+  .Button__form--icon:active:not(:disabled):not([data-loading="true"]) {
     transform: scale(1.1);
   }
 }

@@ -304,6 +304,7 @@ const Input: Component<InputProps> = props => {
 						onClick={onCancel}
 						aria-label={local.ariaLabelCancel}
 						class={style['Input__button--close_in']}
+						tabIndex={-1}
 					>
 						{local.cancelLabel}
 					</Button>

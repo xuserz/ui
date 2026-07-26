@@ -1,0 +1,31 @@
+.Pagination {
+  display        : flex;
+  flex-direction : row;
+  justify-content: center;
+  align-items    : center;
+
+  gap: var(--ui-padding-medium-half);
+
+}
+
+.Pagination__in {
+  display        : flex;
+  flex-direction : row;
+  justify-content: center;
+  align-items    : center;
+}
+
+.Pagination .Pagination__button {
+  height    : var(--ui-size-40px);
+  min-width : var(--ui-size-40px);
+  padding   : 0px var(--ui-padding-medium-half);
+  box-sizing: border-box;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+}
+
+.Pagination__button--ellipsis {
+  color: var(--ui-text-secondary);
+}
